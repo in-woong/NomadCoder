@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Something</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="main.css" />
+  </head>
+    <body>
+      <span class="js-weather weather"></span>
+      <button class=" greetingReset">reset my name</button>
+      <button class = "clockNumber">clock time</button>
+      <div class = "block">
+        <div class="js-clock">
+          <h1 class="clock">00:00</h1>
+        </div>
+
+        <form class="js-form form">
+          <input type="text"class= "inputForm" placeholder="what is your name?" />
+        </form>
+        <h2 class="js-greetings greetings"></h2>
+
+        <form class="js-toDoForm">
+          <input type="text" class="inputForm" placeholder="Write what to do" />
+        </form>
+        <div class="toDoList">
+          <div>
+            <h2>Pending</h2>
+            <ul class="pendingList list"></ul>
+          </div>
+          <div>
+            <h2>Finished</h2>
+            <ul class="finishedList list"></ul>
+          </div>
+        </div>
+      </div>  
+    <script src="clock.js"></script>
+    <script src="greeting.js"></script>
+    <script src="todo.js"></script>
+    <script src="bg.js"></script>
+    <script src="weather.js"></script>
+  </body>
+</html>
