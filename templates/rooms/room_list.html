@@ -1,13 +1,11 @@
 {%extends "base.html"%} {%block page_title%} Home {% endblock page_title %}
 {%block content %}
 <div class="container mx-auto pb-10">
-  {{now}}
-
   <div class="rounded-xl -mx-40 bg-gray-800 h-50vh mt-10 mb-24 bg-cover bg-center" style="background-image: url(https://images.unsplash.com/photo-1590765283894-6e7ae619120b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1001&q=80);"></div>
 
   <div class="flex flex-wrap -mx-40 mb-10">
     {% for room in rooms %}
-      {% include 'partials/room_card.html' with room=room %}
+      {% include 'mixins/room_card.html' with room=room %}
     {% endfor %}
   </div>
   

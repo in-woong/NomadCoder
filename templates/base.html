@@ -21,11 +21,12 @@
           <input class="search-box border px-5 py-2 text-sm placeholder-gray-600 font-medium rounded-sm w-full shadow-md hover:shadow-lg focus:outline-none" name="city" placeholder = "Search by City"/>
         </form>
         {% endblock search-bar %}
+        
       </div>
       {% include "partials/nav.html" %}
     </header>
       
-
+    {{now}}
     {% block content %}
     {% endblock %}
     {% include "partials/footer.html" %}

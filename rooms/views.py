@@ -32,6 +32,9 @@ class RoomDetail(DetailView):
 
 
 class SearchView(View):
+
+    """ SearchView Definition"""
+
     def get(self, request):
 
         country = request.GET.get("country")
@@ -108,4 +111,4 @@ class SearchView(View):
 
             form = forms.SearchForm()
 
-        return render(request, "rooms/search.html", {"form": form, "rooms": rooms})
+        return render(request, "rooms/search.html", {"form": form})

@@ -17,14 +17,18 @@
 }
 
 input{
-  @apply rounded-sm py-5 font-light text-lg w-full text-left border border-gray-600 p-5 focus:outline-none focus:border-green-300;
+  @apply rounded-sm py-5 font-light text-lg w-full text-left border border-gray-600 px-5 focus:outline-none focus:border-green-300;
 }
 
 form{
-  input{
+  .input{
     @apply mb-3;
+    &.has_error{
+      input{
+        @apply bg-red-200 border-gray-600 focus:border-gray-600
+      }
+    }
   }
-
 }
 
 
