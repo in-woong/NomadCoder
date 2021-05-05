@@ -1,40 +1,44 @@
-{%extends "base.html"%} {%block page_title%} Home {% endblock page_title %}
+{%extends "base.html"%}
+{%block page_title%}
+  Home
+{% endblock page_title %}
+
 {%block content %}
-<div class="container mx-auto pb-10">
-  <div class="rounded-xl -mx-40 bg-gray-800 h-50vh mt-10 mb-24 bg-cover bg-center" style="background-image: url(https://images.unsplash.com/photo-1590765283894-6e7ae619120b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1001&q=80);"></div>
+  <div class="container mx-auto pb-10">
 
-  <div class="flex flex-wrap -mx-40 mb-10">
-    {% for room in rooms %}
-      {% include 'mixins/room_card.html' with room=room %}
-    {% endfor %}
-  </div>
-  
+    <div class="rounded-xl bg-gray-800  -mx-40  h-96 mt-32 mb-24 bg-cover bg-center"  style="background-image:url(https://images.unsplash.com/photo-1536315238512-4c8cebdaaf93?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop)"></div>
 
-  <div class="flex items-center justify-center mx-auto container pb-5">
-    {% if page_obj.has_previous %}
-      <a href="?page={{page_obj.previous_page_number}}" class="text-red-500">
-        <i class="fas fa-arrow-left fa-lg"></i>
-      </a>
-    {% endif %}
-      
-    <span class="mx-3 font-medium text-lg">
-      {{page_obj.number}} of {{page_obj.paginator.num_pages}}
-    </span>
+    <div class="flex flex-wrap -mx-40 mb-10">
+      {% for room in rooms %}
+        {% include 'mixins/room_card.html' with room=room %}
+      {% endfor %}
+    </div>
     
-    {%if page_obj.has_next %}
-      <a href="?page={{page_obj.next_page_number}}" class="text-red-500">
-        <i class="fas fa-arrow-right fa-lg"></i>
-      </a>
-    {% endif %}
-  </div>
+    <div class="flex items-center justify-center mx-auto container pb-5">
+      {% if page_obj.has_previous %}
+        <a href="?page={{page_obj.previous_page_number}}" class="text-red-500">
+          <i class="fas fa-arrow-left fa-lg"></i>
+        </a>
+      {% endif %}
+        
+      <span class="mx-3 font-medium text-lg">
+        {{page_obj.number}} of {{page_obj.paginator.num_pages}}
+      </span>
+      
+      {%if page_obj.has_next %}
+        <a href="?page={{page_obj.next_page_number}}" class="text-red-500">
+          <i class="fas fa-arrow-right fa-lg"></i>
+        </a>
+      {% endif %}
+    </div>
 
-  <div class="flex items-center justify-center mx-auto container font-medium text-lg">
-    {% for page in page_obj.paginator.page_range %}
-      <a href="?page={{page}}">
-        <span class=" mx-5">{{page}}</span>
-      </a>
-    {% endfor %}
+    <div class="flex items-center justify-center mx-auto container font-medium text-lg">
+      {% for page in page_obj.paginator.page_range %}
+        <a href="?page={{page}}">
+          <span class=" mx-5">{{page}}</span>
+        </a>
+      {% endfor %}
+    </div>
   </div>
-</div>
 
 {% endblock content %}
