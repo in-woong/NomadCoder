@@ -1,0 +1,9 @@
+extends layout.pug
+include mixins/movie
+
+block content
+  each item in movies
+    +movie(item)
+
+  else
+    lis Sorry nothing found.
