@@ -1,1 +1,3 @@
-export default () => "TV";
+const TV = () => "TV";
+
+export default TV;
