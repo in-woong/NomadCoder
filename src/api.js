@@ -3,12 +3,12 @@ import axios from 'axios';
 const api = axios.create({
   baseURL: 'https://api.themoviedb.org/3/',
   params: {
-    api_key: 'f9f8d231a4ae3a7cf18f7b54467801d1',
+    api_key: '10923b261ba94d897ac6b81148314a3f',
     language: 'en-US',
   },
 });
 
-export const movieApi = {
+export const moviesApi = {
   nowPlaying: () => api.get('movie/now_playing'),
   upcoming: () => api.get('movie/upcoming'),
   popular: () => api.get('movie/popular'),
@@ -19,7 +19,7 @@ export const movieApi = {
       },
     }),
   search: (term) =>
-    api.get('serach/movie', {
+    api.get('search/movie', {
       params: {
         query: encodeURIComponent(term),
       },
@@ -27,8 +27,8 @@ export const movieApi = {
 };
 
 export const tvApi = {
-  topRated: () => api.get('tv/popular'),
-  popular: () => api.get('tv/popualr'),
+  topRated: () => api.get('tv/top_rated'),
+  popular: () => api.get('tv/popular'),
   airingToday: () => api.get('tv/airing_today'),
   showDetail: (id) =>
     api.get(`tv/${id}`, {
@@ -36,8 +36,8 @@ export const tvApi = {
         append_to_response: 'videos',
       },
     }),
-    search: (term) =>
-    api.get('serach/tv', {
+  search: (term) =>
+    api.get('search/tv', {
       params: {
         query: encodeURIComponent(term),
       },
