@@ -1,7 +1,7 @@
 import React from 'react';
 import SearchPresenter from './SearchPresenter';
 
-class Search extends React.Componenet {
+class Search extends React.Component {
   state = {
     movieResults: null,
     tvResults: null,
