@@ -1,18 +1,18 @@
-import { moviesApi, tvApi } from 'api';
+import {moviesApi, tvApi} from 'api';
 import React from 'react';
 import DetailPresenter from './DetailPresenter';
 
 class Detail extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
-    const{
-      location:{pathname}
+    const {
+      location: {pathname},
     } = props;
     this.state = {
       result: null,
       loading: true,
       error: null,
-      isMovie: pathname.includes("/movie/")
+      isMovie: pathname.includes('/movie/'),
     };
   }
 
@@ -29,25 +29,23 @@ class Detail extends React.Component {
       return push('/');
     }
 
-
     let result = null;
-    try{
-      if(isMovie){
-        const request = await moviesApi.movieDetail(parsedId);
-        result = request.data;
-      }else{
-        const request = await tvApi.showDetail(parsedId);
-        result = request.data;
+    try {
+      if (isMovie) {
+        ({
+          data: result,
+        } = await moviesApi.movieDetail(parsedId));
+      } else {
+        ({
+          data: result,
+        } = await tvApi.showDetail(parsedId));
       }
       console.log(result);
-    } catch{
-      this.setState({error:"Can't find anything."})
-    }finally{
-      this.setState({loading:false,result})
+    } catch {
+      this.setState({error: "Can't find anything."});
+    } finally {
+      this.setState({loading: false, result});
     }
-
-
-
   }
 
   render() {
