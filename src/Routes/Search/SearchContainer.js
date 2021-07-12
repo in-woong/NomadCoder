@@ -11,12 +11,20 @@ class Search extends React.Component {
     error: null,
   };
 
-  handleSubmit = () => {
+  handleSubmit = (event) => {
+    event.preventDefault();
     const {searchTerm} = this.state;
     if (searchTerm !== '') {
       this.searchByTerm();
     }
   };
+
+  updateTerm = (event) => {
+    const {target:{value}} = event;
+    this.setState({
+      searchTerm: value
+    })
+  }
 
   searchByTerm = async () => {
     const {searchTerm} = this.state;
@@ -37,7 +45,7 @@ class Search extends React.Component {
   };
 
   render() {
-    const {movieResults, tvResults, searchTerm, loading, error, handleSubmit} = this.state;
+    const {movieResults, tvResults, searchTerm, loading, error} = this.state;
     return (
       <SearchPresenter
         movieResults={movieResults}
@@ -45,7 +53,8 @@ class Search extends React.Component {
         searchTerm={searchTerm}
         loading={loading}
         error={error}
-        handleSubmit={handleSubmit}
+        handleSubmit={this.handleSubmit}
+        updateTerm={this.updateTerm}
       />
     );
   }
