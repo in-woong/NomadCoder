@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import Helmet from 'react-helmet';
 import Loader from 'Components/Loader';
 import Section from 'Components/Section';
 import Message from 'Components/Message';
@@ -31,6 +32,9 @@ const SearchPresenter = ({
   updateTerm,
 }) => (
   <Container>
+    <Helmet>
+      <title>Search | Woongflix</title>
+    </Helmet>
     <Form onSubmit={handleSubmit}>
       <Input
         placeholder="Search Movies or TV Shows..."
@@ -46,13 +50,13 @@ const SearchPresenter = ({
           <Section title="Movie Results">
             {movieResults.map((movie) => (
               <Poster
-              key={movie.id}
-              id={movie.id}
-              imageUrl={movie.poster_path}
-              title={movie.original_title}
-              rating={movie.vote_average}
-              year={movie.release_date && movie.release_date.substring(0,4)}
-              isMovie = {true}
+                key={movie.id}
+                id={movie.id}
+                imageUrl={movie.poster_path}
+                title={movie.original_title}
+                rating={movie.vote_average}
+                year={movie.release_date && movie.release_date.substring(0, 4)}
+                isMovie={true}
               />
             ))}
           </Section>
@@ -60,19 +64,27 @@ const SearchPresenter = ({
         {tvResults && tvResults.length > 0 && (
           <Section title="TV Show Results">
             {tvResults.map((show) => (
-            <Poster
-              key={show.id}
-              id={show.id}
-              imageUrl={show.poster_path}
-              title={show.original_name}
-              rating={show.vote_average}
-              year={show.release_date && show.release_date.substring(0, 4)}
-            />
+              <Poster
+                key={show.id}
+                id={show.id}
+                imageUrl={show.poster_path}
+                title={show.original_name}
+                rating={show.vote_average}
+                year={show.release_date && show.release_date.substring(0, 4)}
+              />
             ))}
           </Section>
         )}
-        {error && <Message color="#e74c3c" text={error}/>}
-        {tvResults && movieResults && tvResults.length === 0 && movieResults.length === 0 && <Message text ={`Nothing Found Yo Mother Fucker Got Damn : ${searchTerm}`} color="#95a5a6"/>}
+        {error && <Message color="#e74c3c" text={error} />}
+        {tvResults &&
+          movieResults &&
+          tvResults.length === 0 &&
+          movieResults.length === 0 && (
+            <Message
+              text={`Nothing Found Yo Mother Fucker Got Damn : ${searchTerm}`}
+              color="#95a5a6"
+            />
+          )}
       </>
     )}
   </Container>

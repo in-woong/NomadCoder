@@ -19,7 +19,7 @@ const Base = () => (
         <Route path="/" exact component={Home} />
         <Route path="/tv" exact component={TV} />
         <Route path="/movie/:id" component={Detail} />
-        <Route path="/tv/:id" component={Detail} />
+        <Route path="/show/:id" component={Detail} />
         <Route path="/search" exact component={Search} />
         <Redirect from="*" to="/" />
       </Switch>
