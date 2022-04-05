@@ -7,12 +7,13 @@ const number = document.querySelector('span');
 
 const countModifier = (count = 0, action) => {
   console.log(count, action);
-  if (action.type === 'add') {
-    return count + 1;
-  } else if (action.type === 'minus') {
-    return count - 1;
-  } else {
-    return count;
+  switch (action.type) {
+    case 'add':
+      return count + 1;
+    case 'minus':
+      return count - 1;
+    default:
+      return count;
   }
 };
 
