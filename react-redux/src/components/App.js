@@ -1,0 +1,17 @@
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Detail from '../routes/Detail.jsx';
+import Home from '../routes/Home.jsx';
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<Home />}></Route>
+        <Route Path='/:id' element={<Detail />}></Route>
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+export default App;
