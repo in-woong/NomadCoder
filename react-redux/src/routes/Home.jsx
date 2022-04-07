@@ -5,7 +5,6 @@ import { actionCreator } from '../store';
 import ToDo from '../components/ToDo';
 
 function Home({ toDos, addToDo }) {
-  console.log(toDos, "HOME")
   const [text, setText] = useState('');
 
   const onChange = (e) => {
@@ -14,7 +13,6 @@ function Home({ toDos, addToDo }) {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(text);
     addToDo(text);
     setText('');
   };
@@ -35,7 +33,7 @@ function Home({ toDos, addToDo }) {
   );
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
   return { toDos: state };
 }
 

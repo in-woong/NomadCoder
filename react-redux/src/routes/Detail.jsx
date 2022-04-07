@@ -1,16 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
-function Detail() {
-  const [text, setText] = useState('');
-  const onChange = (e) => {
-    setText(e.target.value);
-  };
+function Detail({ toDo }) {
   return (
     <>
-      <h1>To Do</h1>;
-      <input type='text' value={text} onChange={onChange} />
+      <h1> {toDo?.text}</h1>
+      <h5>Created at: {toDo?.id}</h5>
     </>
   );
 }
 
-export default Detail;
+function mapStateToProps(state, ownProps) {
+  return { toDo: state };
+}
+
+export default connect(mapStateToProps)(Detail);
+
