@@ -68,20 +68,7 @@ interface ICoin {
 
 function Coins() {
   const { isLoading, data } = useQuery<ICoin[]>(['alllCoins'], fetchCoins);
-  console.log(isLoading, data);
-  // const [coins, setCoins] = useState<ICoin[]>([]);
-  // const [loading, setLoading] = useState(true);
 
-  // useEffect(() => {
-  //   setLoading(true);
-  //   (async () => {
-  //     //TODO:에러처리
-  //     const response = await fetch('https://api.coinpaprika.com/v1/coins');
-  //     const data = await response.json();
-  //     setCoins(data.slice(0, 100));
-  //     setLoading(false);
-  //   })();
-  // }, []);
   return (
     <Container>
       <Header>
