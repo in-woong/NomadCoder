@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link, Routes, Route, useMatch } from 'react-router-dom';
 import { useParams, useLocation } from 'react-router';
 import styled from 'styled-components';
+import { Helmet } from 'react-helmet';
 
 import Chart from './Chart';
 import Price from './Price';
@@ -149,16 +150,23 @@ function Coin() {
   );
   const { isLoading: priceLoading, data: priceData } = useQuery<IPriceData>(
     ['price', `${coinId}`],
-    () => fetchCoinPrice(coinId!)
+    () => fetchCoinPrice(coinId!),
+    {
+      refetchInterval: 5000,
+    }
   );
 
   const isLoading = infoLoading || priceLoading;
   return (
     <Container>
+      <Helmet>
+        <title>
+        {state?.name ? state.name : isLoading ? 'Loading...' : infoData?.name}
+        </title>
+      </Helmet>
       <Header>
         <Title>
-          코인{' '}
-          {state?.name ? state.name : loading ? 'Loading...' : infoData?.name}
+          {state?.name ? state.name : isLoading ? 'Loading...' : infoData?.name}
         </Title>
       </Header>
       {isLoading ? (
@@ -176,7 +184,7 @@ function Coin() {
             </OverviewItem>
             <OverviewItem>
               <span>Open Source:</span>
-              <span>{infoData?.open_source ? 'Yes' : 'No'}</span>
+              <span>{priceData?.quotes.USD.price}</span>
             </OverviewItem>
           </Overview>
           <Description>{infoData?.description}</Description>
@@ -201,7 +209,7 @@ function Coin() {
 
           <Routes>
             <Route path='price' element={<Price />}></Route>
-            <Route path='chart' element={<Chart />}></Route>
+            <Route path='chart' element={<Chart coinId={coinId!} />}></Route>
           </Routes>
         </>
       )}
