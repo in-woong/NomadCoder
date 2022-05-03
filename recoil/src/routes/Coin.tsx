@@ -8,6 +8,8 @@ import Chart from './Chart';
 import Price from './Price';
 import { useQuery } from 'react-query';
 import { fetchCoinInfo, fetchCoinPrice } from './api';
+import { useRecoilValue } from 'recoil';
+import { isDarkAtom } from '../atoms';
 
 const Tabs = styled.div`
   display: grid;
@@ -135,11 +137,9 @@ interface IPriceData {
     };
   };
 }
-interface ICoin{
-  isDark:boolean;
-}
 
-function Coin({isDark}:ICoin) {
+function Coin() {
+  const isDark =useRecoilValue(isDarkAtom);
   const [loading, setLoading] = useState(true);
   const { coinId } = useParams<{ coinId: string }>();
   const { state } = useLocation() as RouteState;
@@ -164,7 +164,7 @@ function Coin({isDark}:ICoin) {
     <Container>
       <Helmet>
         <title>
-        {state?.name ? state.name : isLoading ? 'Loading...' : infoData?.name}
+          {state?.name ? state.name : isLoading ? 'Loading...' : infoData?.name}
         </title>
       </Helmet>
       <Header>
@@ -212,7 +212,10 @@ function Coin({isDark}:ICoin) {
 
           <Routes>
             <Route path='price' element={<Price />}></Route>
-            <Route path='chart' element={<Chart isDark={isDark} coinId={coinId!} />}></Route>
+            <Route
+              path='chart'
+              element={<Chart isDark={isDark} coinId={coinId!} />}
+            ></Route>
           </Routes>
         </>
       )}
