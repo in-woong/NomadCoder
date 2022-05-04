@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { isNativeError } from 'util/types';
 // function ToDolist() {
 //   const [toDo, setToDo] = useState('');
 //   const [toDoError, setToDoError] = useState('');
@@ -34,15 +35,72 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 
 interface IFormInput {
   toDo: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  username: string;
+  password: string;
+  password1: string;
 }
 
 function ToDolist() {
-  const { register, watch, handleSubmit } = useForm<IFormInput>();
-  const onSubmit: SubmitHandler<IFormInput> = (data) => console.log(data);
+  const {
+    register,
+    watch,
+    handleSubmit,
+    formState: { errors },
+    setError,
+  } = useForm<IFormInput>({
+    defaultValues: {
+      toDo: 'write something',
+      email: '@naver.com',
+    },
+  });
+
+  const onSubmit: SubmitHandler<IFormInput> = (data) => {
+    if (data.password !== data.password1) {
+      setError(
+        'password1',
+        { message: 'Password are not the same' },
+        { shouldFocus: true }
+      );
+    }
+  };
+  console.log(errors);
   return (
     <div>
       <form action='' onSubmit={handleSubmit(onSubmit)}>
-        <input {...register('toDo')} type='text' />
+        <input
+          {...register('toDo', {
+            required: 'toDo list is required',
+            minLength: { value: 5, message: 'Your ToDo list is too short' },
+          })}
+          type='text'
+        />
+
+        <input
+          {...register('email', {
+            required: true,
+            pattern: {
+              value: /^[A-Za-z0-9._%+-]+@naver.com$/,
+              message: 'Only naver.com emails allowed',
+            },
+          })}
+          placeholder='Eamil'
+        />
+        <span>{errors.email?.message}</span>
+        <input
+          {...register('firstName', {
+            required: true,
+            minLength: 5,
+            validate: (value) => !value.includes('nico'),
+          })}
+        />
+        <input {...register('lastName', { required: true, minLength: 5 })} />
+        <input {...register('username', { required: true, minLength: 5 })} />
+        <input {...register('password', { required: true, minLength: 5 })} />
+        <input {...register('password1', { required: true, minLength: 5 })} />
+        <span>{errors.password1?.message}</span>
         <button>Add</button>
       </form>
     </div>
