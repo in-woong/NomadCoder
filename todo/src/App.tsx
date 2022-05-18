@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { MouseEvent } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { createGlobalStyle } from 'styled-components';
-import ToDolist from './componenets/ToDoList';
+import { groupsState, usersSelector } from './atoms';
+import ToDolist from './componenets/todo/ToDoList';
 
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap');
@@ -63,9 +65,27 @@ table {
 `;
 
 function App() {
+  const groups = useRecoilValue(groupsState);
+  const [users, setUsers] = useRecoilState(usersSelector);
+
+  const onClick = (event: MouseEvent<HTMLButtonElement>) => {
+    const value = event.currentTarget.innerText;
+    const selectedUsers = getUsers(value);
+    setUsers(event as any);
+  };
+
+
   return (
     <>
       <GlobalStyle />
+      {groups.map((group) => (
+        <button onClick={onClick}>{group}</button>
+      ))}
+      <ul>
+        {users.map((user) => (
+          <li>{user}</li>
+        ))}
+      </ul>
       <ToDolist />
     </>
   );

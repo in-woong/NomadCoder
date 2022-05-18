@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { filteredToDoState, toDoFilterState, toDoState } from '../toDoAtoms';
+import { filteredToDoState, toDoFilterState, toDoState } from '../../toDoAtoms';
 import CreateToDo from './CreateToDo';
 import ToDo from './ToDo';
 
