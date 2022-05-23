@@ -1,10 +1,10 @@
 # NomadCoder 강의 및 코드내용 정리
 
-## VanilaJS
+## VanilaJS (lecture, Challenge)
 
-## Python
+## Python (lecture, Challenge)
 
-## NodeJS
+## NodeJS (lecture, Challenge)
 
 ## ReactJS
 
