@@ -1,0 +1,13 @@
+extends layout.pug
+
+block content
+    h4 Upload Movie
+    if errorMessage
+        span=errorMessage
+    form(method="POST")
+        input(name="title", placeholder="Title", required, type="text",)
+        input(name="summary", placeholder="Summary", required, type="text", )
+        input(name="year", placeholder="Year", required, type="year", )
+        input(name="rating", placeholder="Rating", required, type="number",)
+        input(name="genre", placeholder="Genre", required, type="text",)
+        input(type="submit", value="Upload Movie") 

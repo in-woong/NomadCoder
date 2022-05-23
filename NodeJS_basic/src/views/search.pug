@@ -1,0 +1,11 @@
+extends layout.pug 
+include mixins/movie
+
+block content
+  form(method="GET")
+    input(placeholder="search by title", name="keyword", type="text")
+    input(type="submit", value="Search now")
+
+  div 
+    each movie in movies 
+      +movie(movie)

@@ -1,0 +1,33 @@
+{
+  "name": "wetube",
+  "version": "1.0.0",
+  "description": "The way to watch videos.",
+  "scripts": {
+    "dev": "nodemon --exec babel-node src/init.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/in-woong/wetube.git"
+  },
+  "author": "woong",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/in-woong/wetube/issues"
+  },
+  "homepage": "https://github.com/in-woong/wetube#readme",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "express": "^4.17.1",
+    "mongoose": "^5.12.10",
+    "morgan": "^1.10.0",
+    "pug": "^3.0.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.14.2",
+    "@babel/node": "^7.14.2",
+    "@babel/preset-env": "^7.14.2",
+    "nodemon": "^2.0.7"
+  },
+  "keywords": [],
+  "main": "index.js"
+}
