@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+
+.search-box {
+  transition: box-shadow 0.2s linear;
+}
+
+.nav_link {
+  @apply ml-8 border-b-2 border-white hover:border-gray-600 h-full flex items-center;
+  a {
+    @apply py-10 px-3;
+  }
+}
+
+.btn{
+  @apply text-center rounded-sm py-5 font-light text-lg w-full;
+  &.btn--small{
+    @apply py-3 rounded-lg;
+  }
+}
+
+.btn-link{
+  @apply text-center py-3 rounded-lg py-5 font-light text-lg w-full text-white bg-red-500;
+
+}
+
+input,
+textarea,
+select {
+  @apply rounded-sm py-5 font-light text-lg w-full text-left border border-gray-600 px-5 focus:outline-none focus:border-green-300;
+}
+
+textarea{
+  resize: none;
+  height: 100px;
+}
+
+select{
+  height: 50px;
+}
+
+form{
+  .input{
+    @apply mb-3;
+    &.has_error{
+      input{
+        @apply bg-red-200 border-gray-600 focus:border-gray-600
+      }
+    }
+  }
+}
+
+
+.border-section{
+  @apply border-b border-gray-400 pb-5 mt-5;
+}
+
+@tailwind utilities;
