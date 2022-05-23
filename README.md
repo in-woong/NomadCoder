@@ -10,5 +10,5 @@
 
 ## Redux
 
-## TypeScript
+## TypeScript (진행중)
 
