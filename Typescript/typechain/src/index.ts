@@ -1,3 +1,1 @@
-import { init, exit } from 'myPackage';
-
-localStorage
+import { init, exit } from './myPackage';
