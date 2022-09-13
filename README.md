@@ -15,6 +15,7 @@
   - todolist 입력
   - 진행중, 완료 체크 리스트 구현
 - GET Geolocation
+
   <img src="./images/vanilaJS/geolocation.png"/>
 
   - geolocation 값 받아와서 표현하는 기능 구현
