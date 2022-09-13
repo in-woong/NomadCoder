@@ -120,28 +120,28 @@
 # Challenge
 
 - HTML CSS (카카오톡 클론 코딩)
-  <img src="./images/challenges/KokoaClone.png">
+  <img src="./images/Challenges/KokoaClone.png">
 
 - Vanila JS
 
-  <img src="./images/challenges/VanilaJS.png">
+  <img src="./images/Challenges/VanilaJS.png">
 
 - CSS Layout
 
-  <img src="./images/challenges/CSSLayout.png">
+  <img src="./images/Challenges/CSSLayout.png">
 
 - Python
 
-  <img src="./images/challenges/Python.png">
+  <img src="./images/Challenges/Python.png">
 
 - React JS
 
-  <img src="./images/challenges/ReactJS.png">
+  <img src="./images/Challenges/ReactJS.png">
 
 - Youtube Clonecoding
 
-  <img src="./images/challenges/YoutubeClone.png">
+  <img src="./images/Challenges/YoutubeClone.png">
 
 - Airbnb Clonecoding
 
-  <img src="./images/challenges/Airbnb.png">
+  <img src="./images/Challenges/Airbnb.png">
