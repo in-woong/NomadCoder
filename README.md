@@ -23,12 +23,125 @@
 - GET Weather information
   - 받아온 geol값을 활용하여 weather 값 표시하는 기능 구현
 
+### Challenge
+
 ## Python (lecture, Challenge)
+
+### 구현기능
+
+- Stack Overflow Jobs Scrapping
+- Indeed Jobs Scrapping
+- Web Server
+- Search Feature
+- Export to CSV
 
 ## NodeJS (lecture, Challenge)
 
+### 구현기능
+
+- Youtube Frontend 화면 구성(github 이동 간 삭제)
+- Youtube Server 구성
+  [Server Github page]("https://github.com/in-woong/NomadCoder/tree/main/NodeJS_basic")
+
+#### Users
+
+- User Authentication
+- Facebook Login
+- Github Login
+- User Profile
+- Log in
+- Log Out
+
+#### Videos
+
+- Video Upload
+- Video Recording
+- Search Video
+- AJAX Comments
+- View Count
+
+#### Deployment
+
+- Heroku
+- S3 Upload
+- Mongo Atlas
+
+#### Theory
+
+- MVC
+- Routing
+- Templates
+- Models
+- Relationiships
+
 ## ReactJS
+
+### Netflix Clone coding
+
+- 메인화면
+  <img src="./images/Netflix/main.png"/>
+- 상세화면
+  <img src="./images/Netflix/detail.png"/>
+- 검색화면
+  <img src="./images/Netflix/search.png"/>
+
+### 암호화폐 시세 트래커
+
+> React Query 사용을 중점
+
+ <img src="./images/cryptotracker/main.png"/>
+ <img src="./images/cryptotracker/detail.png"/>
+
+- Data Fetching
+- Data Visualization
+- Routing
+- Dark Monde
+
+### 트렐로 클론코딩 (진행중)
+
+- Form Validation
+- Drag and Drop
+- State management
+
+### 모션프로젝트 (진행중)
+
+- Animation
+- Sliders
+- Modals
 
 ## Redux
 
-## TypeScript (진행중)
+> redux를 통한 Todo list를 통해 상태관리 하는 방법 습득
+
+## TypeScript
+
+> 기본 지식 습득
+
+# Challenge
+
+- HTML CSS (카카오톡 클론 코딩)
+  <img src="./images/challenges/KokoaClone.png">
+
+- Vanila JS
+
+  <img src="./images/challenges/VanilaJS.png">
+
+- CSS Layout
+
+  <img src="./images/challenges/CSSLayout.png">
+
+- Python
+
+  <img src="./images/challenges/Python.png">
+
+- React JS
+
+  <img src="./images/challenges/ReactJS.png">
+
+- Youtube Clonecoding
+
+  <img src="./images/challenges/YoutubeClone.png">
+
+- Airbnb Clonecoding
+
+  <img src="./images/challenges/Airbnb.png">
