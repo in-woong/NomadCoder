@@ -120,6 +120,7 @@
 # Challenge
 
 - HTML CSS (카카오톡 클론 코딩)
+
   <img src="./images/Challenges/KokoaClone.png">
 
 - Vanila JS
