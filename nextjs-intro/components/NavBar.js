@@ -16,14 +16,6 @@ export default function NavBar() {
         </span>
       </Link>
       <style jsx>{`
-        nav {
-          background-color: tomato;
-        }
-
-        span {
-          text-decoration: none;
-        }
-
         .active {
           color: yellow;
         }
