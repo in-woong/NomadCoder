@@ -19,6 +19,9 @@ const Details = () => {
       <p className='first-letter:text-8xl'>
         loremasdvjcxiojklwefsvmxcljvlka;sduiof
       </p>
+      <div className="bg-[url('/vercel.svg')] dark:md:hover:bg-teal-400">
+        <h2 className='text-[97851px] text-[#000]'>Hello</h2>
+      </div>
     </div>
   );
 };
