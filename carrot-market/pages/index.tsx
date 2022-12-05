@@ -3,7 +3,7 @@ import type { NextPage } from 'next';
 const Home: NextPage = () => {
   return (
     <div className='grid min-h-screen gap-10 bg-slate-400 py-20 px-5'>
-      <div className='rounded-3xl bg-white p-6 shadow-xl'>
+      <div className='flex flex-col rounded-3xl bg-white p-6 shadow-xl'>
         <span className='text-3xl font-semibold'>Select Item</span>
         <div className='my-2 flex justify-between'>
           <span className='text-gray-500'>Grey Chair</span>
@@ -57,9 +57,9 @@ const Home: NextPage = () => {
           <span className='text-xs text-gray-500'>Chair</span>
           <div className='mt-3 mb-5 flex items-center justify-between'>
             <div className='space-x-3'>
-              <button className='h-5 w-5 rounded-full bg-yellow-500'></button>
-              <button className='h-5 w-5 rounded-full bg-indigo-500'></button>
-              <button className='h-5 w-5 rounded-full bg-teal-500'></button>
+              <button className='h-5 w-5 rounded-full bg-yellow-500 bg-opacity-50 ring-yellow-500 ring-offset-2 transition hover:ring-2 focus:ring-2'></button>
+              <button className='h-5 w-5 rounded-full bg-indigo-500 bg-opacity-50 ring-indigo-500 ring-offset-2 transition hover:ring-2 focus:ring-2'></button>
+              <button className='h-5 w-5 rounded-full bg-teal-500 bg-opacity-50 ring-teal-500 ring-offset-2 transition hover:ring-2 focus:ring-2'></button>
             </div>
             <div className='flex items-center space-x-5'>
               <button className=' flex aspect-square w-8 items-center justify-center rounded-lg bg-blue-200 text-xl text-gray-500'>
