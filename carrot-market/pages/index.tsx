@@ -3,32 +3,33 @@ import type { NextPage } from 'next';
 const Home: NextPage = () => {
   return (
     <div className='grid min-h-screen gap-10 bg-slate-400 py-20 px-5 lg:grid-cols-2 xl:grid-cols-3 xl:place-content-center'>
-      <div className='flex flex-col justify-between rounded-3xl bg-white p-6 shadow-xl '>
-        <span className='text-3xl font-semibold'>Select Item</span>
+      <div className='flex flex-col justify-between rounded-3xl bg-white p-6 shadow-xl dark:bg-black '>
+        <span className='text-3xl font-semibold dark:text-gray-100'>
+          Select Item
+        </span>
         <ul>
           {[1, 2, 3, 4, 5].map((i) => (
-            <li
-              key={i}
-              className='my-2 flex justify-between odd:bg-blue-50 even:bg-yellow-200'
-            >
-              <span className='text-gray-500'>Grey Chair</span>
-              <span className='font-semibold'>$19</span>
+            <li key={i} className='my-2 flex justify-between'>
+              <span className='text-gray-500 dark:text-gray-50'>
+                Grey Chair
+              </span>
+              <span className='font-semibold dark:text-white'>$19</span>
             </li>
           ))}
         </ul>
         <ul>
           {['a', 'b', 'c', ''].map((c, i) => (
-            <li className='bg-red-500 py-2 empty:hidden' key={i}>
+            <li className='py-2 empty:hidden dark:text-gray-50' key={i}>
               {c}
             </li>
           ))}
         </ul>
 
-        <div className='mt-2 flex justify-between border-t-2 border-dashed pt-2'>
+        <div className='mt-2 flex justify-between border-t-2  border-dashed pt-2 dark:text-gray-50'>
           <span>Total</span>
           <span className='font-semibold'>$10</span>
         </div>
-        <button className='mx-auto  mt-5  w-3/4 rounded-xl bg-blue-500 p-2 text-center text-white hover:bg-teal-500 hover:text-black focus:bg-red-500 active:bg-yellow-500'>
+        <button className='mx-auto mt-5 w-3/4 rounded-xl bg-blue-500 p-2 text-center text-white hover:bg-teal-500 hover:text-black focus:bg-red-500 active:bg-yellow-500 dark:border dark:bg-black dark:hover:bg-gray-700 dark:hover:text-black'>
           Checkout
         </button>
       </div>
