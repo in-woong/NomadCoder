@@ -4,7 +4,7 @@ export default function Forms() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [formErrors, setFormErrors] = useState();
+  const [formErrors, setFormErrors] = useState('');
 
   const onUsernameChange = (event: React.SyntheticEvent<HTMLInputElement>) => {
     const {
