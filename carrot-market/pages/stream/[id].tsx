@@ -1,12 +1,23 @@
 import { NextPage } from 'next';
 
-const LiveDetail: NextPage = () => {
+const StreamDetail: NextPage = () => {
   return (
     <div className='space-y-4 px-4 py-10'>
       <div className='aspect-video w-full rounded-md bg-slate-300 shadow-sm'></div>
-      <h3 className='mt-2 text-2xl font-semibold text-gray-800'>
-        Let&apos;s try potatos
-      </h3>
+      <div className='mt-5'>
+        <h1 className='text-3xl font-bold text-gray-900'>Galaxy S50</h1>
+        <span className='mt-3 block text-2xl text-gray-900'>$140</span>
+        <p className=' my-6 text-gray-700'>
+          My money&apos;s in that office, right? If she start giving me some
+          bullshit about it ain&apos;t there, and we got to go someplace else
+          and get it, I&apos;m gonna shoot you in the head then and there. Then
+          I&apos;m gonna shoot that bitch in the kneecaps, find out where my
+          goddamn money is. She gonna tell me too. Hey, look at me when I&apos;m
+          talking to you, motherfucker. You listen: we go in there, and that
+          ni**a Winston or anybody else is in there, you the first motherfucker
+          to get shot. You understand?
+        </p>
+      </div>
       <div>
         <h2 className='text-2xl font-bold text-gray-900'>Live Chat</h2>
 
@@ -91,8 +102,8 @@ const LiveDetail: NextPage = () => {
               <p>미쳤어</p>
             </div>
           </div>
-          <div className='fixed inset-x-0 bottom-2 mx-auto w-full max-w-md'>
-            <div className='relative items-center first-line:first-letter:flex'>
+          <div className='fixed inset-x-0 bottom-0 bg-white py-2'>
+            <div className='relative  mx-auto flex w-full max-w-md items-center first-line:first-letter:flex'>
               <input
                 type='text'
                 className='w-full rounded-full border-gray-300 pr-12 shadow-sm focus:border-orange-500 focus:outline-none focus:ring-orange-500'
@@ -110,4 +121,4 @@ const LiveDetail: NextPage = () => {
   );
 };
 
-export default LiveDetail;
+export default StreamDetail;
