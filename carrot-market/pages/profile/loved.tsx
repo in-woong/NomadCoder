@@ -5,7 +5,7 @@ import Layout from '../../components/layout';
 const Loved: NextPage = () => {
   return (
     <Layout canGoBack title='관심목록'>
-      <div className='flex flex-col space-y-5 divide-y pb-10'>
+      <div className='flex flex-col space-y-5 divide-y-2 pb-10'>
         {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((_, i) => (
           <Item
             key={i}
