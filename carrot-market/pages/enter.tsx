@@ -17,8 +17,8 @@ const Enter: NextPage = () => {
   const [submitting, setSubmitting] = useState(false);
   const [method, setMethod] = useState<'email' | 'phone'>('email');
 
-  const onValid = (data: EnterForm) => {
-    enter(data);
+  const onValid = (validForm: EnterForm) => {
+    enter(validForm);
   };
   const onEmailClick = () => {
     setMethod('email');
