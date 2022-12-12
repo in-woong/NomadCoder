@@ -11,10 +11,18 @@ interface EnterForm {
 
 export default function Enter() {
   const { register, reset, handleSubmit } = useForm<EnterForm>();
+  const [submitting, setSubmitting] = useState(false);
   const [method, setMethod] = useState<'email' | 'phone'>('email');
 
   const onValid = (data: EnterForm) => {
-    console.log(data);
+    setSubmitting(true);
+    fetch('/api/test', {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }).then(() => setSubmitting(false));
   };
   const onEmailClick = () => {
     setMethod('email');
@@ -31,7 +39,7 @@ export default function Enter() {
       <div className='mt-8'>
         <div className='flex flex-col items-center'>
           <h5 className='text-center text-sm text-gray-500'>Enter using:</h5>
-          <div className=' mt-8 grid w-full grid-cols-2 gap-16 border-b'>
+          <div className=' mt-8 grid w-full grid-cols-2 border-b'>
             <button
               className={cls(
                 'border-b-2 pb-4 font-medium',
@@ -81,7 +89,7 @@ export default function Enter() {
           ) : null}
           {method === 'email' ? <Button text={'Get login link'} /> : null}
           {method === 'phone' ? (
-            <Button text={'Get one-time password'} />
+            <Button text={submitting ? 'Loading' : 'Get one-time password'} />
           ) : null}
         </form>
         <div className='mt-8'>
