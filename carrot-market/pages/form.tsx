@@ -5,6 +5,7 @@ interface LoginForm {
   username: string;
   password: string;
   email: string;
+  errors?: string;
 }
 
 export default function Forms() {
@@ -12,9 +13,11 @@ export default function Forms() {
     register,
     handleSubmit,
     formState: { errors },
+    setError,
   } = useForm<LoginForm>({ mode: 'onBlur' });
   const onValid = (data: LoginForm) => {
     console.log(data);
+    setError('errors', 'Backend is Offline');
   };
   const onInvalid = (errors: FieldErrors) => {
     console.log(errors);
