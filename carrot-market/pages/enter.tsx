@@ -1,12 +1,30 @@
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import Button from '../components/button';
 import Input from '../components/input';
 import { cls } from '../libs/utils';
 
+interface EnterForm {
+  email?: string;
+  phone?: string;
+}
+
 export default function Enter() {
+  const { register, reset, handleSubmit } = useForm<EnterForm>();
   const [method, setMethod] = useState<'email' | 'phone'>('email');
-  const onEmailClick = () => setMethod('email');
-  const onPhoneClick = () => setMethod('phone');
+
+  const onValid = (data: EnterForm) => {
+    console.log(data);
+  };
+  const onEmailClick = () => {
+    setMethod('email');
+    reset();
+  };
+  const onPhoneClick = () => {
+    setMethod('phone');
+    reset();
+  };
+
   return (
     <div className='mt-16 px-4'>
       <h3 className='text-center text-3xl font-bold'>Enter to Carrot</h3>
@@ -38,12 +56,22 @@ export default function Enter() {
             </button>
           </div>
         </div>
-        <form className='mt-8 flex flex-col space-y-4'>
+        <form
+          onSubmit={handleSubmit(onValid)}
+          className='mt-8 flex flex-col space-y-4'
+        >
           {method === 'email' ? (
-            <Input name='email' label='Email address' type='email' required />
+            <Input
+              register={register('email', { required: true })}
+              name='email'
+              label='Email address'
+              type='email'
+              required
+            />
           ) : null}
           {method === 'phone' ? (
             <Input
+              register={register('phone', { required: true })}
               name='phone'
               label='Phone number'
               type='number'
