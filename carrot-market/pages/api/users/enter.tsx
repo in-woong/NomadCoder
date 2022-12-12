@@ -1,5 +1,5 @@
+import withHandler from '@libs/server/withHandler';
 import { NextApiRequest, NextApiResponse } from 'next';
-import withHandler from '../../../libs/server/withHandler';
 
 function handler(req: NextApiRequest, res: NextApiResponse) {
   console.log(req.body);
