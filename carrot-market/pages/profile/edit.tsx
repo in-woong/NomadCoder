@@ -1,8 +1,8 @@
 import { NextPage } from 'next';
-import Layout from '../../components/layout';
+import Layout from '@components/layout';
 import Profile from '.';
-import Input from '../../components/input';
-import Button from '../../components/button';
+import Input from '@components/input';
+import Button from '@components/button';
 
 const EditProfile: NextPage = () => {
   return (
