@@ -14,7 +14,6 @@ interface EnterForm {
 const Enter: NextPage = () => {
   const { register, reset, handleSubmit } = useForm<EnterForm>();
   const [enter, { loading, data, error }] = useMutation('/api/test');
-  const [submitting, setSubmitting] = useState(false);
   const [method, setMethod] = useState<'email' | 'phone'>('email');
 
   const onValid = (validForm: EnterForm) => {
@@ -85,7 +84,7 @@ const Enter: NextPage = () => {
           ) : null}
           {method === 'email' ? <Button text={'Get login link'} /> : null}
           {method === 'phone' ? (
-            <Button text={submitting ? 'Loading' : 'Get one-time password'} />
+            <Button text={loading ? 'Loading' : 'Get one-time password'} />
           ) : null}
         </form>
         <div className='mt-8'>
