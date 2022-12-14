@@ -4,7 +4,7 @@ import client from '@libs/server/client';
 import { NextApiRequest, NextApiResponse } from 'next';
 import withHandler, { ResponseType } from '../../libs/server/withHandler';
 
-const twilioClient = twilio(process.env.TWILIO_SID, process.env.TWILIO_TOKEN);
+twilio(process.env.TWILIO_SID, process.env.TWILIO_TOKEN);
 sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
 
 async function handler(
@@ -29,22 +29,20 @@ async function handler(
     },
   });
   if (phone) {
-    await twilioClient.messages.create({
-      messagingServiceSid: process.env.TWILIO_MSID,
-      to: process.env.MY_PHONE!,
-      body: `로그인 토큰은 ${payload}입니다.`,
-    });
+    // await twilioClient.messages.create({
+    //   messagingServiceSid: process.env.TWILIO_MSID,
+    //   to: process.env.MY_PHONE!,
+    //   body: `로그인 토큰은 ${payload}입니다.`,
+    // });
   }
   if (email) {
-    const mail = await sgMail.send({
-      from: 'inwoong100@gmail.com',
-      to: 'inwoong100@gmail.com',
-      subject: 'Your Carrot Market Verification Email',
-      text: `Your token is ${payload}`,
-      html: `<strong>Your token is ${payload}</strong>`,
-    });
-
-    console.log(mail);
+    // await sgMail.send({
+    //   from: 'inwoong100@gmail.com',
+    //   to: 'inwoong100@gmail.com',
+    //   subject: 'Your Carrot Market Verification Email',
+    //   text: `Your token is ${payload}`,
+    //   html: `<strong>Your token is ${payload}</strong>`,
+    // });
   }
   return res.json({ ok: true });
 }
