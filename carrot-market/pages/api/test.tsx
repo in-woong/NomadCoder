@@ -15,7 +15,20 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     },
     update: {},
   });
-  console.log(user);
+  const token = await client.token.create({
+    data: {
+      payload: '1234',
+      user: {
+        connectOrCreate: {
+          where: {
+            ...payload,
+          },
+          create: { name: 'Anonymous', ...payload },
+        },
+      },
+    },
+  });
+  console.log(user, token);
   return res.status(200).end();
 }
 
