@@ -3,8 +3,10 @@ import Input from '@components/input';
 import useMutation from '@libs/client/useMutation';
 import { cls } from '@libs/client/utils';
 import { NextPage } from 'next';
-import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { isReadable } from 'stream';
 
 interface EnterForm {
   email?: string;
@@ -31,6 +33,8 @@ const Enter: NextPage = () => {
 
   const [method, setMethod] = useState<'email' | 'phone'>('email');
 
+  const router = useRouter();
+
   const onValid = (validForm: EnterForm) => {
     enter(validForm);
   };
@@ -38,6 +42,7 @@ const Enter: NextPage = () => {
     if (tokenLoading) return;
     confirmToken(confirmTokenform);
   };
+
   const onEmailClick = () => {
     setMethod('email');
     reset();
@@ -46,7 +51,12 @@ const Enter: NextPage = () => {
     setMethod('phone');
     reset();
   };
-  console.log(data);
+
+  useEffect(() => {
+    if (tokenData?.ok) {
+      router.push('/');
+    }
+  }, [tokenData, router]);
   return (
     <div className='mt-16 px-4'>
       <h3 className='text-center text-3xl font-bold'>Enter to Carrot</h3>
