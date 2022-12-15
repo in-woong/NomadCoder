@@ -21,11 +21,13 @@ interface ItemDetailResponse {
 
 const ItemDetail: NextPage = () => {
   const router = useRouter();
-  const { data } = useSWR<ItemDetailResponse>(
+  const { data, mutate } = useSWR<ItemDetailResponse>(
     router.query.id && `/api/products/${router.query.id}`
   );
   const [toggleFav] = useMutation(`/api/products/${router.query.id}/fav`);
   const onFavClick = () => {
+    if (!data) return;
+    mutate({ ...data, isLiked: !data.isLiked }, false);
     toggleFav({});
   };
 
@@ -38,9 +40,9 @@ const ItemDetail: NextPage = () => {
             <div className='h-12 w-12 rounded-full bg-slate-300' />
             <div>
               <p className='text-sm font-medium text-gray-700'>
-                {data?.product?.user.name}
+                {data?.product?.user?.name}
               </p>
-              <Link href={`/users/profiles/${data?.product?.user.id}`}>
+              <Link href={`/users/profiles/${data?.product?.user?.id}`}>
                 <p className='cursor-pointer text-xs font-medium text-gray-500'>
                   View profile &rarr;
                 </p>
@@ -69,7 +71,7 @@ const ItemDetail: NextPage = () => {
                 {data?.isLiked ? (
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
-                    className='h-5 w-5'
+                    className='h-6 w-6'
                     viewBox='0 0 20 20'
                     fill='currentColor'
                   >
@@ -103,7 +105,7 @@ const ItemDetail: NextPage = () => {
         <div>
           <h2 className='text-2xl font-bold text-gray-900'>Similar items</h2>
           <div className='mt-6 grid grid-cols-2 gap-4'>
-            {data?.relatedProducts.map((product) => (
+            {data?.relatedProducts?.map((product) => (
               <Link key={product.id} href={`/items/${product.id}`}>
                 <div>
                   <div className='mb-4 h-56 w-full bg-slate-300' />
