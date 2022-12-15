@@ -11,7 +11,6 @@ async function handler(
     query: { id },
     session: { user },
   } = req;
-
   const alreadyExists = await client.fav.findFirst({
     where: {
       productId: Number(id),
@@ -29,6 +28,11 @@ async function handler(
     await client.fav.create({
       data: {
         user: {
+          connect: {
+            id: user?.id,
+          },
+        },
+        product: {
           connect: {
             id: Number(id),
           },
