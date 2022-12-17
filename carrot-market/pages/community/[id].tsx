@@ -5,12 +5,13 @@ import { useRouter } from 'next/router';
 import useSWR from 'swr';
 import { useEffect } from 'react';
 import Link from 'next/link';
-import { Post, User } from '@prisma/client';
+import type { Answer, Post, User } from '@prisma/client';
 import { AnswerWithUser } from '@components/answer';
 
-import Answer from '@components/answer';
+import AnswerComponent from '@components/answer';
 import WonderingAnswerCount from '@components/community/WonderingAnswerCount';
 import useMutation from '@libs/client/useMutation';
+import { useForm } from 'react-hook-form';
 
 interface PostWithUser extends Post {
   user: User;
@@ -27,13 +28,27 @@ interface CommunityPostResponse {
   isWondering: boolean;
 }
 
+interface AnswerRespnose {
+  ok: boolean;
+  answer: Answer;
+}
+
+interface AnswerForm {
+  answer: string;
+}
+
 const CommunityPostDetail: NextPage = () => {
   const router = useRouter();
+  const { register, handleSubmit, reset } = useForm<AnswerForm>();
   const { data, mutate } = useSWR<CommunityPostResponse>(
     router.query.id ? `/api/posts/${router.query.id}` : null
   );
 
-  const [wonder] = useMutation(`/api/posts/${router.query.id}/wonder`);
+  const [wonder, { loading }] = useMutation(
+    `/api/posts/${router.query.id}/wonder`
+  );
+  const [answer, { data: answerData, loading: answerLoading }] =
+    useMutation<AnswerRespnose>(`/api/posts/${router.query.id}/answer`);
   const onWonderClick = () => {
     if (!data || !data?.ok) return;
     mutate(
@@ -52,12 +67,24 @@ const CommunityPostDetail: NextPage = () => {
       },
       false
     );
-    wonder({});
+    if (!loading) wonder({});
   };
+  const onValid = (form: AnswerForm) => {
+    if (answerLoading) return;
+    answer(form);
+  };
+
+  useEffect(() => {
+    if (answerData && answerData.ok) {
+      reset();
+    }
+  }, [answerData, reset]);
+
   useEffect(() => {
     if (!data) return;
     if (data.ok && !data.post) router.push('/community');
   }, [data, router]);
+
   return (
     <Layout canGoBack>
       <div>
@@ -92,20 +119,21 @@ const CommunityPostDetail: NextPage = () => {
 
         <div className='my-5 space-y-5 px-4'>
           {data?.post.answers.map((answer) => (
-            <Answer key={answer.id} answer={answer} />
+            <AnswerComponent key={answer.id} answer={answer} />
           ))}
         </div>
 
-        <div className='px-4'>
+        <form className='px-4' onSubmit={handleSubmit(onValid)}>
           <TextArea
             name='description'
             placeholder='Answer this question!'
             required
+            register={register('answer', { required: true, minLength: 5 })}
           />
           <button className='mt-2 w-full rounded-md border border-transparent bg-orange-500 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 '>
-            Reply
+            {answerLoading ? 'Loading...' : 'Reply'}
           </button>
-        </div>
+        </form>
       </div>
     </Layout>
   );
