@@ -6,7 +6,6 @@ import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { isReadable } from 'stream';
 
 interface EnterForm {
   email?: string;
@@ -63,7 +62,6 @@ const Enter: NextPage = () => {
       <div className='mt-12'>
         {data?.ok ? (
           <>
-            {' '}
             <form
               onSubmit={tokenHandleSubmit(onTokenValid)}
               className='mt-8 flex flex-col space-y-4'
