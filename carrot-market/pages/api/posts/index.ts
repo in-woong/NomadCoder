@@ -32,24 +32,18 @@ async function handler(
     const {
       query: { latitude, longitude },
     } = req;
-    const parsedLatitude = parseFloat(latitude?.toString());
-    const parsedLongitude = parseFloat(longitude?.toString());
+
+    if (!latitude || !longitude) return res.json({ ok: false });
+
+    const parsedLatitude = parseFloat(latitude.toString());
+    const parsedLongitude = parseFloat(longitude.toString());
     const posts = await client.post.findMany({
-      where: {
-        latitude: {
-          gte: parsedLatitude - 0.01,
-          lte: parsedLatitude + 0.01,
-        },
-        longitude: {
-          gte: parsedLongitude - 0.01,
-          lte: parsedLatitude + 0.01,
-        },
-      },
       include: {
         user: {
           select: {
             id: true,
             name: true,
+            avatar: true,
           },
         },
         _count: {
@@ -59,7 +53,18 @@ async function handler(
           },
         },
       },
+      where: {
+        latitude: {
+          gte: parsedLatitude - 0.01,
+          lte: parsedLatitude + 0.01,
+        },
+        longitude: {
+          gte: parsedLongitude - 0.01,
+          lte: parsedLongitude + 0.01,
+        },
+      },
     });
+
     return res.json({ ok: true, posts });
   }
 }
