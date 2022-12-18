@@ -49,6 +49,7 @@ const CommunityPostDetail: NextPage = () => {
   );
   const [answer, { data: answerData, loading: answerLoading }] =
     useMutation<AnswerRespnose>(`/api/posts/${router.query.id}/answer`);
+
   const onWonderClick = () => {
     if (!data || !data?.ok) return;
     mutate(
@@ -77,8 +78,9 @@ const CommunityPostDetail: NextPage = () => {
   useEffect(() => {
     if (answerData && answerData.ok) {
       reset();
+      mutate();
     }
-  }, [answerData, reset]);
+  }, [answerData, reset, mutate]);
 
   useEffect(() => {
     if (!data) return;
