@@ -23,7 +23,15 @@ async function handler(
           avatar: true,
         },
       },
-      product: true,
+      product: {
+        include: {
+          _count: {
+            select: {
+              favs: true,
+            },
+          },
+        },
+      },
     },
   });
 
