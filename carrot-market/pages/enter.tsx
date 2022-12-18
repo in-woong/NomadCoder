@@ -26,9 +26,9 @@ const Enter: NextPage = () => {
     useForm<TokenForm>();
 
   const [enter, { loading, data, error }] =
-    useMutation<MutationResult>('/api/enter');
+    useMutation<MutationResult>('/api/users/enter');
   const [confirmToken, { loading: tokenLoading, data: tokenData }] =
-    useMutation<MutationResult>('/api/confirm');
+    useMutation<MutationResult>('/api/users/confirm');
 
   const [method, setMethod] = useState<'email' | 'phone'>('email');
 

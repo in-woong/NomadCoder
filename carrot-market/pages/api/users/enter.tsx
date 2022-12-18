@@ -2,7 +2,7 @@ import twilio from 'twilio';
 import sgMail from '@sendgrid/mail';
 import client from '@libs/server/client';
 import { NextApiRequest, NextApiResponse } from 'next';
-import withHandler, { ResponseType } from '../../libs/server/withHandler';
+import withHandler, { ResponseType } from '@libs/server/withHandler';
 
 twilio(process.env.TWILIO_SID, process.env.TWILIO_TOKEN);
 sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
