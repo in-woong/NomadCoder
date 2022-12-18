@@ -19,7 +19,7 @@ async function handler(
       userId: user?.id,
     },
   });
-  console.log(req.body);
+
   const newAnswer = await client.answer.create({
     data: {
       user: {

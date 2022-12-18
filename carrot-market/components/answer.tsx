@@ -17,9 +17,7 @@ export default function Answer({ answer, ...rest }: AnswerProps) {
         <span className='block text-sm font-medium text-gray-700'>
           {answer.user.name}
         </span>
-        <span className='block text-xs text-gray-500 '>
-          {answer.updatedAt.toString()}
-        </span>
+        <span className='block text-xs text-gray-500 '>2시간 전</span>
         <p className='mt-2 text-gray-700'>{answer.answer}</p>
       </div>
     </div>
