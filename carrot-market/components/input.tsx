@@ -3,6 +3,7 @@ import { UseFormRegisterReturn } from 'react-hook-form';
 interface InputProps {
   label: string;
   name: string;
+  placeholder?: string;
   kind?: 'text' | 'phone' | 'price';
   type: string;
   register?: UseFormRegisterReturn;
@@ -12,6 +13,7 @@ interface InputProps {
 export default function Input({
   label,
   name,
+  placeholder,
   kind = 'text',
   register,
   type,
@@ -28,6 +30,7 @@ export default function Input({
       {kind === 'text' ? (
         <div className='relative flex items-center  rounded-md shadow-sm'>
           <input
+            placeholder={placeholder}
             id={name}
             required={required}
             {...register}
@@ -43,6 +46,7 @@ export default function Input({
           </div>
           <input
             id={name}
+            placeholder={placeholder}
             required={required}
             {...register}
             type={type}
@@ -60,6 +64,7 @@ export default function Input({
           </span>
           <input
             id={name}
+            placeholder={placeholder}
             required={required}
             {...register}
             type={type}
