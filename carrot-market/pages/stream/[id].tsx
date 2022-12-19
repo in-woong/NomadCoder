@@ -1,16 +1,32 @@
 import { NextPage } from 'next';
 import Layout from '@components/layout';
 import Message from '@components/message';
+import useSWR from 'swr';
+import { useRouter } from 'next/router';
+import { Stream } from '@prisma/client';
+
+interface StreamResponse {
+  ok: true;
+  streams: Stream;
+}
 
 const StreamDetail: NextPage = () => {
+  const router = useRouter();
+  const { data } = useSWR<StreamResponse>(
+    router.query.id ? `/api/streams/${router.query.id}` : null
+  );
   return (
     <Layout canGoBack>
       <div className='space-y-4 px-4 py-10'>
         <div className='aspect-video w-full rounded-md bg-slate-300 shadow-sm' />
         <div className='mt-5'>
-          <h1 className='text-3xl font-bold text-gray-900'>Galaxy S50</h1>
-          <span className='mt-3 block text-2xl text-gray-900'>$140</span>
-          <p className=' my-6 text-gray-700'></p>
+          <h1 className='text-3xl font-bold text-gray-900'>
+            {data?.streams?.name}
+          </h1>
+          <span className='mt-3 block text-2xl text-gray-900'>
+            ${data?.streams?.price}
+          </span>
+          <p className=' my-6 text-gray-700'>{data?.streams?.description}</p>
         </div>
         <div>
           <h2 className='text-2xl font-bold text-gray-900'>Live Chat</h2>
