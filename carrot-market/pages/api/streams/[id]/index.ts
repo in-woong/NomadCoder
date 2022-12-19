@@ -14,6 +14,20 @@ async function handler(
     where: {
       id: Number(id),
     },
+    include: {
+      messages: {
+        select: {
+          id: true,
+          message: true,
+          user: {
+            select: {
+              id: true,
+              avatar: true,
+            },
+          },
+        },
+      },
+    },
   });
   if (!streams) return res.json({ ok: false });
   return res.json({ ok: true, streams });
