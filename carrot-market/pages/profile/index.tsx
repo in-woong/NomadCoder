@@ -5,6 +5,7 @@ import useUser from '@libs/client/useUser';
 import useSWR from 'swr';
 import { Review, User } from '@prisma/client';
 import { cls } from '@libs/client/utils';
+import reviews from 'pages/api/reviews';
 
 interface ReviewWithUser extends Review {
   createdBy: User;
@@ -22,7 +23,14 @@ const Profile: NextPage = () => {
     <Layout hasTabBar title='나의 캐럿'>
       <div className='px-4'>
         <div className='mt-4 flex items-center space-x-3'>
-          <div className='h-16 w-16 rounded-full bg-slate-500' />
+          {user?.avatar ? (
+            <img
+              src={`https://imagedelivery.net/8Y7LSXihgcc5yJjzmABO2w/${user?.avatar}/public`}
+              className='h-16 w-16 rounded-full bg-slate-500'
+            />
+          ) : (
+            <div className='h-16 w-16 rounded-full bg-slate-500' />
+          )}
           <div className='flex flex-col'>
             <span className='font-medium text-gray-900'>{user?.name}</span>
             <Link href='/profile/edit'>
@@ -104,7 +112,14 @@ const Profile: NextPage = () => {
         {data?.reviews?.map((review) => (
           <div className='mt-12' key={review.id}>
             <div className='flex items-center space-x-4'>
-              <div className='h-12 w-12 rounded-full bg-slate-400' />
+              {review?.createdBy.avatar ? (
+                <img
+                  src={`https://imagedelivery.net/8Y7LSXihgcc5yJjzmABO2w/${review?.createdBy.avatar}/public`}
+                  className='h-12 w-12 rounded-full bg-slate-400'
+                />
+              ) : (
+                <div className='h-12 w-12 rounded-full bg-slate-400' />
+              )}
               <div>
                 <h4 className='text-sm font-bold text-gray-900'>
                   {review.createdBy.name}
