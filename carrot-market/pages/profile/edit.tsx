@@ -40,15 +40,21 @@ const EditProfile: NextPage = () => {
   const avatar = watch('avatar');
   const [avatarPreview, setAvatarPReview] = useState('');
 
-  const onValid = ({ email, phone, name, avatar }: EditProfileForm) => {
+  const onValid = async ({ email, phone, name, avatar }: EditProfileForm) => {
     if (loading) return;
     if (email === '' && phone === '' && name === '') {
       return setError('formErrors', {
         message: 'Email OR Phone number aer required. you need to choose one',
       });
     }
+    if (avatar && avatar.length > 0) {
+      const cloudFlareRequest = await (await fetch('/api/files')).json();
+      console.log(cloudFlareRequest);
 
-    editProfile({ email, phone, name });
+      // editProfile({ email, phone, name });
+    } else {
+      // editProfile({ email, phone, name });
+    }
   };
 
   const onChange = () => {
