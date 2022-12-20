@@ -48,8 +48,13 @@ const EditProfile: NextPage = () => {
       });
     }
     if (avatar && avatar.length > 0) {
-      const cloudFlareRequest = await (await fetch('/api/files')).json();
-      console.log(cloudFlareRequest);
+      const { id, uploadURL } = await (await fetch('/api/files')).json();
+      const form = new FormData();
+      form.append('file', avatar[0], user?.name);
+      await fetch(uploadURL, {
+        method: 'POST',
+        body: form,
+      });
 
       // editProfile({ email, phone, name });
     } else {
