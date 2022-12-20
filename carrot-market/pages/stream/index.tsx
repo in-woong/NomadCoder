@@ -12,7 +12,7 @@ interface StreamsResponse {
 }
 
 const Stream: NextPage = () => {
-  const { data } = useSWR<StreamsResponse>(`/api/streams`);
+  const { data } = useSWR<StreamsResponse>(`/api/streams?`);
 
   return (
     <Layout hasTabBar title='라이브'>
