@@ -8,6 +8,7 @@ import useUser from '@libs/client/useUser';
 import useMutation from '@libs/client/useMutation';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
+import { loadImg } from '@libs/client/utils';
 
 interface EditProfileForm {
   email?: string;
@@ -76,10 +77,7 @@ const EditProfile: NextPage = () => {
     if (user?.email) setValue('email', user.email);
     if (user?.phone) setValue('phone', user.phone);
     if (user?.name) setValue('name', user.name);
-    if (user?.avatar)
-      setAvatarPreview(
-        `https://imagedelivery.net/8Y7LSXihgcc5yJjzmABO2w/${user?.avatar}/avatar`
-      );
+    if (user?.avatar) setAvatarPreview(loadImg({ imgId: user?.avatar }));
   }, [user, setValue]);
 
   useEffect(() => {

@@ -6,7 +6,9 @@ import useSWR from 'swr';
 import Link from 'next/link';
 import { Product, User } from '@prisma/client';
 import useMutation from '@libs/client/useMutation';
-import { cls } from '@libs/client/utils';
+import { cls, loadImg } from '@libs/client/utils';
+import { userAgent } from 'next/server';
+import Image from 'next/image';
 
 interface ProductwithUser extends Product {
   user: User;
@@ -35,9 +37,31 @@ const ItemDetail: NextPage = () => {
     <Layout canGoBack>
       <div className='px-4 py-4'>
         <div className='mb-8'>
-          <div className='h-96 bg-gray-400' />
+          {data?.product.image ? (
+            <div className='relative pb-80'>
+              <Image
+                alt='product'
+                src={loadImg({ imgId: data.product.image })}
+                className='bg-slate-300 object-center '
+                layout='fill'
+              />
+            </div>
+          ) : (
+            <div className='h-96 bg-gray-400' />
+          )}
+
           <div className='flex items-center space-x-3 border-t border-b py-3'>
-            <div className='h-12 w-12 rounded-full bg-slate-300' />
+            {data?.product.user.avatar ? (
+              <img
+                src={loadImg({
+                  imgId: data?.product.user.avatar,
+                  varName: 'avatar',
+                })}
+                className='h-12 w-12 rounded-full bg-slate-300'
+              />
+            ) : (
+              <div className='h-12 w-12 rounded-full bg-slate-300' />
+            )}
             <div>
               <p className='text-sm font-medium text-gray-700'>
                 {data?.product?.user?.name}
@@ -108,7 +132,14 @@ const ItemDetail: NextPage = () => {
             {data?.relatedProducts?.map((product) => (
               <Link key={product.id} href={`/items/${product.id}`}>
                 <div>
-                  <div className='mb-4 h-56 w-full bg-slate-300' />
+                  {product.image ? (
+                    <img
+                      src={loadImg({ imgId: product.image })}
+                      className='mb-4 h-56 w-full bg-slate-300'
+                    />
+                  ) : (
+                    <div className='mb-4 h-56 w-full bg-slate-300' />
+                  )}
                   <h3 className='-mb-1 text-gray-700'>{product.name}</h3>
                   <span className='text-sm font-medium text-gray-900'>
                     ${product.price}

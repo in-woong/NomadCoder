@@ -27,13 +27,7 @@ const Home: NextPage = () => {
       </Head>
       <div className='flex flex-col space-y-5 divide-y'>
         {data?.products?.map((product) => (
-          <Item
-            id={product.id}
-            key={product.id}
-            title={product.name}
-            price={product.price}
-            hearts={product._count.favs}
-          />
+          <Item key={product.id} product={product} />
         ))}
         <FloatingButton href='/items/upload'>
           <svg
