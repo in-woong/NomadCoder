@@ -17,18 +17,11 @@ interface ProductListProps {
 
 export default function ProductList({ kind }: ProductListProps) {
   const { data } = useSWR<ProductListResponse>(`/api/users/me/${kind}`);
-
   if (!data) return <></>;
   return (
     <>
       {data[kind].map((record) => (
-        <Item
-          id={record.product.id}
-          key={record.id}
-          title={record.product.name}
-          price={record.product.price}
-          hearts={record.product._count.favs}
-        />
+        <Item key={record.id} product={record.product} />
       ))}
     </>
   );

@@ -1,5 +1,4 @@
 import { NextPage } from 'next';
-import Item from '@components/item';
 import Layout from '@components/layout';
 import useSWR from 'swr';
 import { ProductWithCount } from 'pages';

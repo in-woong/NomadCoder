@@ -4,8 +4,9 @@ import Layout from '@components/layout';
 import useUser from '@libs/client/useUser';
 import useSWR from 'swr';
 import { Review, User } from '@prisma/client';
-import { cls } from '@libs/client/utils';
+import { cls, loadImg } from '@libs/client/utils';
 import reviews from 'pages/api/reviews';
+import Image from 'next/image';
 
 interface ReviewWithUser extends Review {
   createdBy: User;
@@ -24,8 +25,11 @@ const Profile: NextPage = () => {
       <div className='px-4'>
         <div className='mt-4 flex items-center space-x-3'>
           {user?.avatar ? (
-            <img
-              src={`https://imagedelivery.net/8Y7LSXihgcc5yJjzmABO2w/${user?.avatar}/public`}
+            <Image
+              alt='avatar'
+              width={48}
+              height={48}
+              src={loadImg({ imgId: user?.avatar, varName: 'avatar' })}
               className='h-16 w-16 rounded-full bg-slate-500'
             />
           ) : (
@@ -114,7 +118,10 @@ const Profile: NextPage = () => {
             <div className='flex items-center space-x-4'>
               {review?.createdBy.avatar ? (
                 <img
-                  src={`https://imagedelivery.net/8Y7LSXihgcc5yJjzmABO2w/${review?.createdBy.avatar}/public`}
+                  src={loadImg({
+                    imgId: review.createdBy.avatar,
+                    varName: 'avatar',
+                  })}
                   className='h-12 w-12 rounded-full bg-slate-400'
                 />
               ) : (
