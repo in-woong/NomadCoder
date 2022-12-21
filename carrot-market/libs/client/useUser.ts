@@ -11,9 +11,9 @@ interface UserResponse {
 export default function useUser() {
   const { data, error } = useSWR<UserResponse>('/api/users/me');
   const router = useRouter();
-
+  console.log('useUser');
   useEffect(() => {
-    if (data && !data.ok) {
+    if (data && !data.ok && router.pathname !== '/enter') {
       router.replace('/enter');
     }
 

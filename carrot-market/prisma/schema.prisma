@@ -180,9 +180,12 @@ model Stream {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  name        String
-  description String @db.MediumText
-  price       Int
+  name          String
+  description   String  @db.MediumText
+  price         Int
+  cloudflareId  String
+  cloudflareUrl String?
+  cloudflareKey String?
 
   user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId   Int

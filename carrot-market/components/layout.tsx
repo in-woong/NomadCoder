@@ -127,7 +127,7 @@ export default function Layout({
               <span>채팅</span>
             </div>
           </Link>
-          <Link href='/stream'>
+          <Link href='/streams'>
             <div
               className={cls(
                 'flex flex-col items-center space-y-2 ',

@@ -40,6 +40,7 @@ const Enter: NextPage = () => {
   const onTokenValid = (confirmTokenform: TokenForm) => {
     if (tokenLoading) return;
     confirmToken(confirmTokenform);
+    console.log('loading');
   };
 
   const onEmailClick = () => {
@@ -53,6 +54,7 @@ const Enter: NextPage = () => {
 
   useEffect(() => {
     if (tokenData?.ok) {
+      console.log('go to home');
       router.push('/');
     }
   }, [tokenData, router]);
