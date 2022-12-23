@@ -9,6 +9,7 @@ import { Suspense, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 const Bs = dynamic(
+  //@ts-ignore
   () =>
     new Promise((resolve) =>
       setTimeout(() => resolve(import('@components/bs')), 10000)

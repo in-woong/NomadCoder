@@ -33,8 +33,8 @@ async function handler(
 
   const isOwner = stream?.userId === user?.id;
   if (stream && !isOwner) {
-    delete stream.cloudflareKey;
-    delete stream.cloudflareUrl;
+    stream.cloudflareKey = 'XXX';
+    stream.cloudflareUrl = 'XXX';
   }
 
   if (!stream) return res.json({ ok: false });
