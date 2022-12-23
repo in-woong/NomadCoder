@@ -7,7 +7,6 @@ import Link from 'next/link';
 import { Product, User } from '@prisma/client';
 import useMutation from '@libs/client/useMutation';
 import { cls, loadImg } from '@libs/client/utils';
-import { userAgent } from 'next/server';
 import Image from 'next/image';
 
 interface ProductwithUser extends Product {

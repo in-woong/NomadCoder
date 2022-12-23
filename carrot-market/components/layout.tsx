@@ -131,7 +131,7 @@ export default function Layout({
             <div
               className={cls(
                 'flex flex-col items-center space-y-2 ',
-                router.pathname === '/stream'
+                router.pathname === '/streams'
                   ? 'text-orange-500'
                   : 'transition-colors hover:text-gray-500'
               )}

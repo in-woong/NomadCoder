@@ -14,7 +14,6 @@ interface ItemProps {
 }
 
 export default function Item({ product }: ItemProps) {
-  console.log(product);
   return (
     <Link href={`/items/${product.id}`}>
       <div className='flex cursor-pointer justify-between px-4 pt-5'>
