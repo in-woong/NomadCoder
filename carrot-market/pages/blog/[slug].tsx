@@ -1,3 +1,4 @@
+import Layout from '@components/layout';
 import { read, readdirSync } from 'fs';
 import matter from 'gray-matter';
 import { GetStaticProps, NextPage, NextPageContext } from 'next';
@@ -5,8 +6,15 @@ import remarkHtml from 'remark-html';
 import remarkParse from 'remark-parse';
 import { unified } from 'unified';
 
-const Post: NextPage<{ post: string }> = ({ post }) => {
-  return <>{post}</>;
+const Post: NextPage<{ title: string; post: string }> = ({ title, post }) => {
+  return (
+    <Layout title={title} seoTitle={title} canGoBack hasTabBar>
+      <div
+        className='blog-post-content p-10'
+        dangerouslySetInnerHTML={{ __html: post }}
+      />
+    </Layout>
+  );
 };
 
 export function getStaticPaths() {
@@ -30,6 +38,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
 
   return {
     props: {
+      title: data.title,
       post: value,
     },
   };
