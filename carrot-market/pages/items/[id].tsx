@@ -42,7 +42,7 @@ const ItemDetail: NextPage = () => {
                 alt='product'
                 src={loadImg({ imgId: data.product.image })}
                 className='bg-slate-300 object-center '
-                layout='fill'
+                fill={true}
               />
             </div>
           ) : (
