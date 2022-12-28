@@ -6,9 +6,12 @@ import {
   userAgent,
 } from 'next/server';
 
-export const middleware = async (req: NextRequest, ev: NextFetchEvent) => {
+export async function middleware(req: NextRequest, ev: NextFetchEvent) {
   if (userAgent(req).isBot) {
-    //
+    return NextResponse.json(
+      { message: "Plz don't be a bot. Be human." },
+      { status: 403 }
+    );
   }
   const res = NextResponse.next();
   const session = await getIronSession(req, res, {
@@ -24,7 +27,7 @@ export const middleware = async (req: NextRequest, ev: NextFetchEvent) => {
     req.nextUrl.pathname = '/enter';
     return NextResponse.redirect(req.nextUrl);
   }
-};
+}
 
 export const config = {
   matcher: [

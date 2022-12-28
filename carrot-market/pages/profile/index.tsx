@@ -5,9 +5,9 @@ import useUser from '@libs/client/useUser';
 import useSWR, { SWRConfig } from 'swr';
 import { Review, User } from '@prisma/client';
 import { cls, loadImg } from '@libs/client/utils';
-import reviews from 'pages/api/reviews';
 import Image from 'next/image';
 import { withSsrSession } from '@libs/server/withSession';
+import client from '@libs/server/client';
 
 interface ReviewWithUser extends Review {
   createdBy: User;
