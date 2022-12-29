@@ -1,22 +1,19 @@
-import Document, { Head, Html, Main, NextScript } from 'next/document';
+import { Html, Head, Main, NextScript } from 'next/document';
 
-class customDocument extends Document {
-  render(): JSX.Element {
-    return (
-      <Html lang='ko'>
-        <Head>
-          <link
-            href='https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap'
-            rel='stylesheet'
-          />
-        </Head>
-        <body>
-          <Main />
-          <NextScript />
-        </body>
-      </Html>
-    );
-  }
+export default function Document() {
+  console.log('Document is RUNNING');
+  return (
+    <Html lang='ko'>
+      <Head>
+        <link
+          href='https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap'
+          rel='stylesheet'
+        />
+      </Head>
+      <body>
+        <Main />
+        <NextScript />
+      </body>
+    </Html>
+  );
 }
-
-export default customDocument;

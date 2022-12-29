@@ -1,5 +1,6 @@
 import { User } from '@prisma/client';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import useSWR from 'swr';
 
 interface UserResponse {
@@ -8,7 +9,11 @@ interface UserResponse {
 }
 
 export default function useUser() {
-  const { data, error } = useSWR<UserResponse>('/api/users/me');
+  const [url, setUrl] = useState<null | string>(null);
+  useEffect(() => {
+    setUrl('/api/users/me');
+  }, []);
+  const { data, error } = useSWR<UserResponse>(url);
   const router = useRouter();
 
   // useEffect(() => {

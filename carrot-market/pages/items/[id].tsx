@@ -61,6 +61,8 @@ const ItemDetail: NextPage<ItemDetailResponse> = ({
                   imgId: product.user.avatar,
                   varName: 'avatar',
                 })}
+                width={10}
+                height={10}
                 className='h-12 w-12 rounded-full bg-slate-300'
               />
             ) : (

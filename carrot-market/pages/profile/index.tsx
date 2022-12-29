@@ -8,7 +8,8 @@ import { cls, loadImg } from '@libs/client/utils';
 import Image from 'next/image';
 import { withSsrSession } from '@libs/server/withSession';
 import client from '@libs/server/client';
-import { Suspense } from 'react';
+import { Suspense, useEffect, useState } from 'react';
+import Loading from './loading';
 
 interface ReviewWithUser extends Review {
   createdBy: User;
@@ -20,7 +21,11 @@ interface ReviewsResponse {
 }
 
 const Reviews = () => {
-  const { data } = useSWR<ReviewsResponse>('/api/reviews');
+  const [url, setUrl] = useState('');
+  useEffect(() => {
+    setUrl('/api/reviews');
+  }, []);
+  const { data } = useSWR<ReviewsResponse>(url);
 
   return (
     <>
@@ -102,7 +107,7 @@ const Profile: NextPage = () => {
   return (
     <Layout hasTabBar title='나의 캐럿'>
       <div className='px-4'>
-        <Suspense fallback={<span>Loading mini profiles</span>}>
+        <Suspense fallback={<Loading />}>
           <MiniProfile />
         </Suspense>
         <div className='mt-10 flex justify-around'>
@@ -176,7 +181,7 @@ const Profile: NextPage = () => {
             </div>
           </Link>
         </div>
-        <Suspense fallback={<span> Loading Reviews</span>}>
+        <Suspense fallback={<Loading />}>
           <Reviews />
         </Suspense>
       </div>
