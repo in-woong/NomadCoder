@@ -14,7 +14,6 @@ interface ItemProps {
 }
 
 export default function Item({ product }: ItemProps) {
-  console.log(product);
   return (
     <Link href={`/items/${product.id}`}>
       <div className='flex cursor-pointer justify-between px-4 pt-5'>
@@ -52,7 +51,7 @@ export default function Item({ product }: ItemProps) {
                 d='M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z'
               ></path>
             </svg>
-            <span>{product._count.favs}</span>
+            <span>{product._count?.favs}</span>
           </div>
           {!!product.comments && (
             <div className='flex items-center space-x-0.5 text-sm  text-gray-600'>

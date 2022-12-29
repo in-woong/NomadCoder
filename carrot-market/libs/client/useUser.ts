@@ -1,6 +1,6 @@
 import { User } from '@prisma/client';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import useSWR from 'swr';
 
 interface UserResponse {
@@ -9,18 +9,22 @@ interface UserResponse {
 }
 
 export default function useUser() {
-  const { data, error } = useSWR<UserResponse>('/api/users/me');
+  const [url, setUrl] = useState<null | string>(null);
+  useEffect(() => {
+    setUrl('/api/users/me');
+  }, []);
+  const { data, error } = useSWR<UserResponse>(url);
   const router = useRouter();
 
-  useEffect(() => {
-    if (data && !data.ok) {
-      router.replace('/enter');
-    }
+  // useEffect(() => {
+  //   if (data && !data.ok && router.pathname !== '/enter') {
+  //     router.replace('/enter');
+  //   }
 
-    if (data && data.ok && router.pathname === '/enter') {
-      router.replace('/profile');
-    }
-  }, [data, router]);
+  //   if (data && data.ok && router.pathname === '/enter') {
+  //     router.replace('/profile');
+  //   }
+  // }, [data, router]);
 
   return { user: data?.profile, isLoading: !data && !error };
 }
