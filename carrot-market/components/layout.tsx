@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { cls } from '@libs/client/utils';
+
 import Head from 'next/head';
 
 interface LayoutProps {
@@ -16,6 +17,7 @@ export default function Layout({
   title,
   canGoBack,
   hasTabBar,
+
   seoTitle,
   children,
 }: LayoutProps) {

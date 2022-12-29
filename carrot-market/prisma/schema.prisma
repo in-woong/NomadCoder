@@ -179,7 +179,6 @@ model Stream {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
   name          String
   description   String  @db.MediumText
   price         Int

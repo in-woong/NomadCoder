@@ -1,3 +1,4 @@
+
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import Button from '@components/button';
 import Layout from '@components/layout';
