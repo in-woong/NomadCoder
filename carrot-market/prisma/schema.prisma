@@ -64,6 +64,8 @@ model Product {
   sales     Sale[]
   purchases Purchase[]
   // Record    Record[]
+
+  @@index([userId])
 }
 
 model Post {
@@ -80,6 +82,8 @@ model Post {
 
   user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId Int
+
+  @@index([userId])
 }
 
 model Answer {
@@ -93,6 +97,9 @@ model Answer {
 
   post   Post @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId Int
+
+  @@index([userId])
+  @@index([postId])
 }
 
 model Wondering {
@@ -104,6 +111,9 @@ model Wondering {
   userId Int
   post   Post @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId Int
+
+  @@index([userId])
+  @@index([postId])
 }
 
 model Review {
@@ -117,6 +127,9 @@ model Review {
   createdById  Int
   createdFor   User   @relation(name: "receivedReviews", fields: [createdForId], references: [id])
   createdForId Int
+
+  @@index([createdById])
+  @@index([createdForId])
 }
 
 model Fav {
@@ -129,6 +142,9 @@ model Fav {
 
   product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId Int
+
+  @@index([userId])
+  @@index([productId])
 }
 
 model Sale {
@@ -141,6 +157,9 @@ model Sale {
 
   product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId Int
+
+  @@index([userId])
+  @@index([productId])
 }
 
 model Purchase {
@@ -153,6 +172,9 @@ model Purchase {
 
   product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId Int
+
+  @@index([userId])
+  @@index([productId])
 }
 
 // model Record {
@@ -176,11 +198,11 @@ model Purchase {
 // }
 
 model Stream {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id            Int      @id @default(autoincrement())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
   name          String
-  description   String  @db.MediumText
+  description   String   @db.MediumText
   price         Int
   cloudflareId  String
   cloudflareUrl String?
@@ -189,6 +211,8 @@ model Stream {
   user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId   Int
   messages Message[]
+
+  @@index([userId])
 }
 
 model Message {
@@ -198,8 +222,11 @@ model Message {
 
   message String @db.MediumText
 
-  user     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId   Int
-  stream   Stream? @relation(fields: [streamId], references: [id], onDelete: Cascade)
-  streamId Int?
+  stream   Stream @relation(fields: [streamId], references: [id], onDelete: Cascade)
+  streamId Int
+
+  @@index([userId])
+  @@index([streamId])
 }
