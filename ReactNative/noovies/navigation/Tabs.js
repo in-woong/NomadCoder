@@ -3,24 +3,61 @@ import Moveis from '../screens/Movies';
 import Search from '../screens/Search';
 import Tv from '../screens/Tv';
 
+import { Ionicons } from '@expo/vector-icons';
+
 const Tab = createBottomTabNavigator();
 
 const Tabs = () => {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarActiveTintColor: 'red',
-        tabBarLabelStyle: { backgroundColor: 'red' },
+        tabBarLabelStyle: {
+          marginTop: -5,
+          fontSize: 12,
+          fontWeight: 600,
+        },
       }}
       initialRouteName='Search'
     >
       <Tab.Screen
-        name='Movies'
-        options={{ tabBarLabelStyle: { backgroundColor: 'purple' } }}
+        name='MOVIES'
+        options={{
+          tabBarIcon: ({ focused, color, size }) => (
+            <Ionicons
+              name={focused ? 'film' : 'film-outline'}
+              color={color}
+              size={size}
+            />
+          ),
+        }}
         component={Moveis}
       />
-      <Tab.Screen name='Tv' options={{ tabBarBadge: 4 }} component={Tv} />
-      <Tab.Screen name='Search' component={Search} />
+      <Tab.Screen
+        name='TV'
+        options={{
+          tabBarIcon: ({ focused, color, size }) => (
+            <Ionicons
+              name={focused ? 'tv' : 'tv-outline'}
+              color={color}
+              size={size}
+            />
+          ),
+        }}
+        component={Tv}
+      />
+      <Tab.Screen
+        name='SEARCH'
+        options={{
+          tabBarIcon: ({ focused, color, size }) => (
+            <Ionicons
+              name={focused ? 'search' : 'search-outline'}
+              color={color}
+              size={size}
+            />
+          ),
+        }}
+        component={Search}
+      />
     </Tab.Navigator>
   );
 };
