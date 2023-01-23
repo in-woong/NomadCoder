@@ -12,6 +12,8 @@ import {
   DefaultTheme,
 } from '@react-navigation/native';
 import Tabs from './navigation/Tabs';
+import Stack from './navigation/Stack';
+import Root from './navigation/Root';
 
 export default function App() {
   const [assets, assetsError] = useAssets([require('./image.png')]);
@@ -25,7 +27,7 @@ export default function App() {
 
   return (
     <NavigationContainer theme={isDark ? DarkTheme : DefaultTheme}>
-      <Tabs />
+      <Root />
     </NavigationContainer>
   );
 }

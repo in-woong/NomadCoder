@@ -4,6 +4,7 @@ import Search from '../screens/Search';
 import Tv from '../screens/Tv';
 
 import { Ionicons } from '@expo/vector-icons';
+import Stack from './Stack';
 
 const Tab = createBottomTabNavigator();
 
