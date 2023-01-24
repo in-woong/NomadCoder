@@ -3,40 +3,14 @@ import styled from 'styled-components/native';
 
 import Swiper from 'react-native-swiper';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import {
-  ActivityIndicator,
-  Dimensions,
-  StyleSheet,
-  Text,
-  useColorScheme,
-} from 'react-native';
-import { makeImagePath } from '../utils';
-import { BlurView } from 'expo-blur';
+import { ActivityIndicator, Dimensions, FlatList, View } from 'react-native';
 
-type Movie = {
-  adult: boolean;
-  backdrop_path: string;
-  genre_ids: number[];
-  id: number;
-  original_language: string;
-  original_title: string;
-  overview: string;
-  popularity: number;
-  poster_path: string;
-  release_date: string;
-  title: string;
-  video: boolean;
-  vote_average: number;
-  vote_count: number;
-};
+import Slide from '../components/Slide';
 
-const API_KEY = 'f9f8d231a4ae3a7cf18f7b54467801d1';
-
-const Container = styled.ScrollView``;
-
-const View = styled.View`
-  flex: 1;
-`;
+import VMedia from '../components/VMedia';
+import HMedia from '../components/HMedia';
+import { Movie, MovieResponse, moviesAPI } from '../api';
+import { useQueryClient, useQuery } from 'react-query';
 
 const Loader = styled.View`
   flex: 1;
@@ -44,110 +18,134 @@ const Loader = styled.View`
   align-items: center;
 `;
 
-const BgImg = styled.Image``;
-
-const Title = styled.Text<{ isDark: boolean }>`
+const ListTitle = styled.Text`
+  color: ${(props) => props.theme.textColor};
   font-size: 16px;
   font-weight: 600;
-  color: ${(props) => (props.isDark ? 'white' : props.theme.textColor)};
+  margin-left: 16px;
+  margin-bottom: 20px;
 `;
 
-const Poster = styled.Image`
-  width: 100px;
-  height: 160px;
-  border-radius: 5px;
+const ListContainer = styled.View`
+  margin-bottom: 40px;
 `;
-
-const Wrapper = styled.View`
-  flex-direction: row;
-  height: 100%;
-  width: 90%;
-  margin: 0 auto;
-  justify-content: space-around;
-  align-items: center;
+const VSeparator = styled.View`
+  width: 20px;
 `;
-
-const Column = styled.View`
-  width: 60%;
-`;
-
-const Overview = styled.Text<{ isDark: boolean }>`
-  margin-top: 10px;
-  color: ${(props) =>
-    props.isDark ? 'rgba(255, 255, 255, 0.6)' : 'rgba(0,0,0,0.8)'};
-`;
-
-const Votes = styled(Overview)`
-  font-size: 12px;
+const HSeparator = styled.View`
+  height: 20px;
 `;
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 
-const Movies: React.FC<NativeStackScreenProps<any, 'Movies'>> = ({
-  navigation: { navigate },
-}) => {
-  const [loading, setLoading] = useState(true);
-  const [nowPlaying, setNowPlaying] = useState<Movie[]>([]);
+const Movies: React.FC<NativeStackScreenProps<any, 'Movies'>> = () => {
+  const queryClient = useQueryClient();
+  const {
+    isLoading: nowPlayingLoading,
+    data: nowPlayingData,
+    isRefetching: isRefetchingNowPlaying,
+  } = useQuery<MovieResponse>(
+    ['movies', 'nowPlaying'],
+    moviesAPI.getNowPlaying
+  );
+  const {
+    isLoading: upcomingLoading,
+    data: upcomingData,
+    isRefetching: isRefetchingUpcoming,
+  } = useQuery<MovieResponse>(['movies', 'upcoming'], moviesAPI.getUpcoming);
+  const {
+    isLoading: trendingLoading,
+    data: trendingData,
+    isRefetching: isRefetchingTrending,
+  } = useQuery<MovieResponse>(['movies', 'trending'], moviesAPI.getTrending);
 
-  const isDark = useColorScheme() === 'dark';
-
-  const getNowPlaying = async () => {
-    const { results } = await (
-      await fetch(
-        `http://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}&page=1&region=KR`
-      )
-    ).json();
-    setNowPlaying(results);
-    setLoading(false);
+  const onRefresh = async () => {
+    queryClient.refetchQueries(['movies']);
   };
 
-  useEffect(() => {
-    getNowPlaying();
-  }, []);
+  const renderVMedia = ({ item }: { item: Movie }) => (
+    <VMedia
+      key={item.id}
+      posterPath={item.poster_path}
+      originalTitle={item.original_title}
+      voteAverage={item.vote_average}
+    />
+  );
+
+  const renderHMedia = ({ item }: { item: Movie }) => (
+    <HMedia
+      posterPath={item.poster_path}
+      releaseDate={item.release_date}
+      originalTitle={item.original_title}
+      overview={item.overview}
+    />
+  );
+
+  const movieKeyExtractor = (item: Movie) => item.id + '';
+
+  const loading = trendingLoading || upcomingLoading || nowPlayingLoading;
+  const refreshing =
+    isRefetchingNowPlaying || isRefetchingTrending || isRefetchingUpcoming;
 
   return loading ? (
     <Loader>
       <ActivityIndicator />
     </Loader>
   ) : (
-    <Container>
-      <Swiper
-        horizontal
-        showsButtons={false}
-        loop
-        autoplay
-        autoplayTimeout={3.5}
-        showsPagination={false}
-        containerStyle={{ width: '100%', height: SCREEN_HEIGHT / 4 }}
-      >
-        {nowPlaying.map((movie) => (
-          <View key={movie.id}>
-            <BgImg
-              style={StyleSheet.absoluteFill}
-              source={{ uri: makeImagePath(movie.backdrop_path) }}
-            />
-            <BlurView
-              tint={isDark ? 'dark' : 'light'}
-              intensity={80}
-              style={StyleSheet.absoluteFill}
+    upcomingData && (
+      <FlatList
+        onRefresh={onRefresh}
+        refreshing={refreshing}
+        ListHeaderComponent={
+          <>
+            <Swiper
+              horizontal
+              showsButtons={false}
+              loop
+              autoplay
+              autoplayTimeout={3.5}
+              showsPagination={false}
+              containerStyle={{
+                marginBottom: 40,
+                width: '100%',
+                height: SCREEN_HEIGHT / 4,
+              }}
             >
-              <Wrapper>
-                <Poster source={{ uri: makeImagePath(movie.poster_path) }} />
-                <Column>
-                  <Title isDark={isDark}>{movie.original_title}</Title>
-                  {movie.vote_average > 0 ? (
-                    <Votes isDark={isDark}>⭐️{movie.vote_average}/10</Votes>
-                  ) : null}
-                  <Overview isDark={isDark}>
-                    {movie.overview.slice(0, 100)}...
-                  </Overview>
-                </Column>
-              </Wrapper>
-            </BlurView>
-          </View>
-        ))}
-      </Swiper>
-    </Container>
+              {nowPlayingData &&
+                nowPlayingData.results.map((movie) => (
+                  <Slide
+                    key={movie.id}
+                    backdropPath={movie.backdrop_path || ''}
+                    posterPath={movie.poster_path || ''}
+                    originalTitle={movie.original_title}
+                    voteAverage={movie.vote_average}
+                    overview={movie.overview}
+                  />
+                ))}
+            </Swiper>
+            <ListContainer>
+              <ListTitle>Trending Movie</ListTitle>
+              {trendingData && (
+                <FlatList
+                  data={trendingData.results}
+                  keyExtractor={movieKeyExtractor}
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  contentContainerStyle={{ paddingLeft: 30 }}
+                  ItemSeparatorComponent={VSeparator}
+                  renderItem={renderVMedia}
+                />
+              )}
+            </ListContainer>
+            <ListTitle>Coming Soon</ListTitle>
+          </>
+        }
+        data={upcomingData.results}
+        keyExtractor={movieKeyExtractor}
+        ItemSeparatorComponent={HSeparator}
+        renderItem={renderHMedia}
+      />
+    )
   );
 };
 

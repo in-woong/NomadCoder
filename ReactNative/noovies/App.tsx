@@ -12,6 +12,10 @@ import Root from './navigation/Root';
 import { ThemeProvider } from 'styled-components/native';
 import { darkTheme, lightTheme } from './style';
 
+import { QueryClientProvider, QueryClient } from 'react-query';
+
+const queryClient = new QueryClient();
+
 export default function App() {
   const [assets, assetsError] = useAssets([require('./image.png')]);
   const [loaded, fontError] = useFonts(Ionicons.font);
@@ -23,10 +27,12 @@ export default function App() {
   }
 
   return (
-    <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
-      <NavigationContainer>
-        <Root />
-      </NavigationContainer>
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
+        <NavigationContainer>
+          <Root />
+        </NavigationContainer>
+      </ThemeProvider>
+    </QueryClientProvider>
   );
 }
