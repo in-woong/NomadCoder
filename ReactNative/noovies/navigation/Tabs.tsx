@@ -1,21 +1,44 @@
+import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Moveis from '../screens/Movies';
 import Search from '../screens/Search';
 import Tv from '../screens/Tv';
 
 import { Ionicons } from '@expo/vector-icons';
-import Stack from './Stack';
+import {
+  BLACK_COLOR,
+  DARK_GRAY_COLOR,
+  LIGHT_GRAY_COLOR,
+  YELLOW_COLOR,
+} from '../colors';
+import { useColorScheme } from 'react-native';
 
 const Tab = createBottomTabNavigator();
 
 const Tabs = () => {
+  const isDark = useColorScheme() === 'dark';
+
   return (
     <Tab.Navigator
+      sceneContainerStyle={{
+        backgroundColor: isDark ? BLACK_COLOR : 'white',
+      }}
       screenOptions={{
+        tabBarStyle: {
+          backgroundColor: isDark ? BLACK_COLOR : 'white',
+        },
+        tabBarActiveTintColor: isDark ? YELLOW_COLOR : BLACK_COLOR,
+        tabBarInactiveTintColor: isDark ? DARK_GRAY_COLOR : LIGHT_GRAY_COLOR,
+        headerStyle: {
+          backgroundColor: isDark ? BLACK_COLOR : 'white',
+        },
+        headerTitleStyle: {
+          color: isDark ? 'white' : BLACK_COLOR,
+        },
         tabBarLabelStyle: {
           marginTop: -5,
-          fontSize: 12,
-          fontWeight: 600,
+          fontSize: 10,
+          fontWeight: '600',
         },
       }}
       initialRouteName='Search'

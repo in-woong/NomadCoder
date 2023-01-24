@@ -2,10 +2,9 @@ import { BLACK_COLOR, DARK_GRAY_COLOR } from './colors';
 
 export const lightTheme = {
   mainBgColor: 'white',
-  textColor: BLACK_COLOR,
+  textColor: '#1e272e',
 };
-
 export const darkTheme = {
-  mainBgColor: BLACK_COLOR,
-  textColor: DARK_GRAY_COLOR,
+  mainBgColor: '#1e272e',
+  textColor: '#d2dae2',
 };

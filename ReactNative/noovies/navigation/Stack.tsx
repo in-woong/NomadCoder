@@ -1,25 +1,36 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { View, Text, TouchableOpacity } from 'react-native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-const ScreenOne = ({ navigation: { navigate } }) => (
+type RootStackParamList = {};
+
+const ScreenOne: React.FC<NativeStackScreenProps<any, 'ScreenOne'>> = ({
+  navigation: { navigate },
+}) => (
   <TouchableOpacity onPress={() => navigate('Two')}>
     <Text>One</Text>
   </TouchableOpacity>
 );
-const ScreenTwo = ({ navigation: { navigate } }) => (
+
+const ScreenTwo: React.FC<NativeStackScreenProps<any, 'ScreenTwo'>> = ({
+  navigation: { navigate },
+}) => (
   <TouchableOpacity onPress={() => navigate('Three')}>
     <Text>Two</Text>
   </TouchableOpacity>
 );
-const ScreenThree = ({ navigation: { navigate } }) => (
+
+const ScreenThree: React.FC<NativeStackScreenProps<any, 'ScreenThree'>> = ({
+  navigation: { navigate },
+}) => (
   <TouchableOpacity onPress={() => navigate('Tabs', { screen: 'SEARCH' })}>
     <Text>ChangeTitle</Text>
   </TouchableOpacity>
 );
 const NativeStack = createNativeStackNavigator();
 
-const Stack = () => (
+const Stack: React.FC = () => (
   <NativeStack.Navigator>
     <NativeStack.Screen name='One' component={ScreenOne} />
     <NativeStack.Screen name='Two' component={ScreenTwo} />
