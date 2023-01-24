@@ -19,6 +19,23 @@ export interface Movie {
   vote_count: number;
 }
 
+export interface TV {
+  name: string;
+  original_name: string;
+  origin_country: string[];
+  vote_count: number;
+  backdrop_path: string | null;
+  vote_average: number;
+  genre_ids: number[];
+  id: number;
+  original_language: string;
+  overview: string;
+  poster_path: string | null;
+  first_air_date: string;
+  popularity: number;
+  media_type: string;
+}
+
 interface BaseResponse {
   page: number;
   total_results: number;
@@ -29,19 +46,36 @@ export interface MovieResponse extends BaseResponse {
   results: Movie[];
 }
 
-const getTrending = () =>
-  fetch(`${BASE_URL}/trending/movie/week?api_key=${API_KEY}`).then((res) =>
-    res.json()
-  );
+export interface TVResponse extends BaseResponse {
+  results: TV[];
+}
 
-const getUpcoming = () =>
-  fetch(`${BASE_URL}/movie/upcoming?api_key=${API_KEY}&page=1&region=KR`).then(
-    (res) => res.json()
-  );
+export const moviesAPI = {
+  getTrending: () =>
+    fetch(`${BASE_URL}/trending/movie/week?api_key=${API_KEY}`).then((res) =>
+      res.json()
+    ),
+  getUpcoming: () =>
+    fetch(
+      `${BASE_URL}/movie/upcoming?api_key=${API_KEY}&page=1&region=KR`
+    ).then((res) => res.json()),
+  getNowPlaying: () =>
+    fetch(
+      `${BASE_URL}/movie/now_playing?api_key=${API_KEY}&page=1&region=KR`
+    ).then((res) => res.json()),
+};
 
-const getNowPlaying = () =>
-  fetch(
-    `${BASE_URL}/movie/now_playing?api_key=${API_KEY}&page=1&region=KR`
-  ).then((res) => res.json());
-
-export const moviesAPI = { getTrending, getUpcoming, getNowPlaying };
+export const tvAPI = {
+  getTrending: () =>
+    fetch(`${BASE_URL}/trending/tv/week?api_key=${API_KEY}`).then((res) =>
+      res.json()
+    ),
+  getAiringTody: () =>
+    fetch(`${BASE_URL}/tv/airing_today?api_key=${API_KEY}`).then((res) =>
+      res.json()
+    ),
+  getTopRated: () =>
+    fetch(`${BASE_URL}/tv/top_rated?api_key=${API_KEY}`).then((res) =>
+      res.json()
+    ),
+};
