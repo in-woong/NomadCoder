@@ -12,6 +12,7 @@ call.hidden = true;
 
 let myStream;
 let myDataChannel;
+
 let muted = false;
 let cameraOff = false;
 
@@ -87,7 +88,6 @@ function handleCameraClick() {
 
 async function handleCameraChange() {
   await getMedia(camerasSelect.value);
-
   if (myPeerConnection) {
     const videoTrack = myStream.getVideoTracks()[0];
     const videoSender = myPeerConnection
