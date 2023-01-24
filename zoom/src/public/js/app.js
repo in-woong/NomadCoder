@@ -11,6 +11,8 @@ const welcome = document.getElementById('welcome');
 call.hidden = true;
 
 let myStream;
+let myDataChannel;
+
 let muted = false;
 let cameraOff = false;
 
@@ -86,6 +88,13 @@ function handleCameraClick() {
 
 async function handleCameraChange() {
   await getMedia(camerasSelect.value);
+  if (myPeerConnection) {
+    const videoTrack = myStream.getVideoTracks()[0];
+    const videoSender = myPeerConnection
+      .getSenders()
+      .find((sender) => sender.track.kind === 'video');
+    videoSender.replaceTrack(videoTrack);
+  }
 }
 
 const welcomeForm = welcome.querySelector('form');
@@ -128,6 +137,9 @@ async function handleWelcomeSubmit(event) {
 //socket Code
 
 socket.on('welcome', async (user, newCount) => {
+  myDataChannel = myPeerConnection.createDataChannel('chat');
+  myDataChannel.addEventListener('message', console.log);
+  console.log('made data channel');
   const h2 = call.querySelector('h2');
   h2.innerText = `Room ${roomName} (${newCount})`;
   addMessage(`${user} joined!`);
@@ -154,6 +166,10 @@ socket.on('room_change', (rooms) => {
 });
 
 socket.on('offer', async (offer) => {
+  myPeerConnection.addEventListener('datachannel', (event) => {
+    myDataChannel = event.channel;
+  });
+  myDataChannel.addEventListener('message', console.log);
   console.log('received offer');
   myPeerConnection.setRemoteDescription(offer);
   const answer = await myPeerConnection.createAnswer();
@@ -180,7 +196,19 @@ welcomeForm.addEventListener('submit', handleWelcomeSubmit);
 //RTC Code
 
 function makeConnection() {
-  myPeerConnection = new RTCPeerConnection();
+  myPeerConnection = new RTCPeerConnection({
+    iceServers: [
+      {
+        urls: [
+          'stun:stun.l.google.com:19302',
+          'stun:stun1.l.google.com:19302',
+          'stun:stun2.l.google.com:19302',
+          'stun:stun3.l.google.com:19302',
+          'stun:stun4.l.google.com:19302',
+        ],
+      },
+    ],
+  });
   myPeerConnection.addEventListener('icecandidate', handleIce);
   myPeerConnection.addEventListener('addstream', handleAddStream);
   myStream

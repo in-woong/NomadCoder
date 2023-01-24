@@ -2,9 +2,7 @@ import { NextPage } from 'next';
 import Link from 'next/link';
 import FloatingButton from '@components/floating-button';
 import Layout from '@components/layout';
-import useSWR from 'swr';
 import { Post, User } from '@prisma/client';
-import useCoords from '@libs/client/useCoords';
 import client from '@libs/server/client';
 
 interface PostWithUser extends Post {
@@ -100,13 +98,14 @@ const Community: NextPage<PostsResponse> = ({ posts }) => {
     </Layout>
   );
 };
+
 export async function getStaticProps() {
-  console.log('BUILDING COMM. STATICALLY');
   const posts = await client?.post.findMany({ include: { user: true } });
   return {
     props: {
       posts: JSON.parse(JSON.stringify(posts)),
     },
+    revalidate: 120,
   };
 }
 
