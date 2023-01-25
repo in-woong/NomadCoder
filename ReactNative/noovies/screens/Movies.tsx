@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components/native';
 
 import Swiper from 'react-native-swiper';
@@ -30,45 +30,36 @@ const HSeparator = styled.View`
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 
+const renderHMedia = ({ item }: { item: Movie }) => (
+  <HMedia
+    posterPath={item.poster_path || ''}
+    releaseDate={item.release_date}
+    originalTitle={item.original_title}
+    overview={item.overview}
+    fullData={item}
+  />
+);
+
+const movieKeyExtractor = (item: Movie) => item.id + '';
+
 const Movies: React.FC<NativeStackScreenProps<any, 'Movies'>> = () => {
   const queryClient = useQueryClient();
-  const {
-    isLoading: nowPlayingLoading,
-    data: nowPlayingData,
-    isRefetching: isRefetchingNowPlaying,
-  } = useQuery<MovieResponse>(
-    ['movies', 'nowPlaying'],
-    moviesAPI.getNowPlaying
-  );
-  const {
-    isLoading: upcomingLoading,
-    data: upcomingData,
-    isRefetching: isRefetchingUpcoming,
-  } = useQuery<MovieResponse>(['movies', 'upcoming'], moviesAPI.getUpcoming);
-  const {
-    isLoading: trendingLoading,
-    data: trendingData,
-    isRefetching: isRefetchingTrending,
-  } = useQuery<MovieResponse>(['movies', 'trending'], moviesAPI.getTrending);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const { isLoading: nowPlayingLoading, data: nowPlayingData } =
+    useQuery<MovieResponse>(['movies', 'nowPlaying'], moviesAPI.getNowPlaying);
+  const { isLoading: upcomingLoading, data: upcomingData } =
+    useQuery<MovieResponse>(['movies', 'upcoming'], moviesAPI.getUpcoming);
+  const { isLoading: trendingLoading, data: trendingData } =
+    useQuery<MovieResponse>(['movies', 'trending'], moviesAPI.getTrending);
 
   const onRefresh = async () => {
+    setRefreshing(true);
     queryClient.refetchQueries(['movies']);
+    setRefreshing(false);
   };
 
-  const renderHMedia = ({ item }: { item: Movie }) => (
-    <HMedia
-      posterPath={item.poster_path || ''}
-      releaseDate={item.release_date}
-      originalTitle={item.original_title}
-      overview={item.overview}
-    />
-  );
-
-  const movieKeyExtractor = (item: Movie) => item.id + '';
-
   const loading = trendingLoading || upcomingLoading || nowPlayingLoading;
-  const refreshing =
-    isRefetchingNowPlaying || isRefetchingTrending || isRefetchingUpcoming;
 
   return loading ? (
     <Loader />
@@ -100,6 +91,7 @@ const Movies: React.FC<NativeStackScreenProps<any, 'Movies'>> = () => {
                   originalTitle={movie.original_title}
                   voteAverage={movie.vote_average}
                   overview={movie.overview}
+                  fullData={movie}
                 />
               ))}
           </Swiper>

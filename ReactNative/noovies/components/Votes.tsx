@@ -12,7 +12,7 @@ const Text = styled.Text`
 `;
 
 const Votes: React.FC<VotesProps> = ({ votes }) => (
-  <Text>{votes > 0 ? `⭐️ ${votes}/10` : `Coming Soon`}</Text>
+  <Text>{votes > 0 ? `⭐️ ${votes.toFixed(2)}/10` : `Coming Soon`}</Text>
 );
 
 export default Votes;
