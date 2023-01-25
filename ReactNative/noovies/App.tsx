@@ -13,6 +13,7 @@ import { ThemeProvider } from 'styled-components/native';
 import { darkTheme, lightTheme } from './style';
 
 import { QueryClientProvider, QueryClient } from 'react-query';
+import Loader from './components/Loader';
 
 const queryClient = new QueryClient();
 
@@ -23,7 +24,7 @@ export default function App() {
   const isDark = useColorScheme() === 'dark';
 
   if (!assets || !loaded) {
-    return <Text>Loading</Text>;
+    return <Loader />;
   }
 
   return (

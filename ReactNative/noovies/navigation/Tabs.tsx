@@ -41,10 +41,10 @@ const Tabs = () => {
           fontWeight: '600',
         },
       }}
-      initialRouteName='Search'
+      initialRouteName='Movies'
     >
       <Tab.Screen
-        name='MOVIES'
+        name='Movies'
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <Ionicons
@@ -57,7 +57,7 @@ const Tabs = () => {
         component={Moveis}
       />
       <Tab.Screen
-        name='TV'
+        name='Tv'
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <Ionicons
@@ -70,7 +70,7 @@ const Tabs = () => {
         component={Tv}
       />
       <Tab.Screen
-        name='SEARCH'
+        name='Search'
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <Ionicons

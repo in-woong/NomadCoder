@@ -1,4 +1,4 @@
-import React, { ReactComponentElement } from 'react';
+import React from 'react';
 import { FlatList } from 'react-native';
 import styled from 'styled-components/native';
 import type { Movie, TV } from '../api';
@@ -40,6 +40,7 @@ const HList: React.FC<HListProps> = ({ title, data }) => (
             'original_title' in item ? item.original_title : item.original_name
           }
           voteAverage={item.vote_average}
+          fullData={item}
         />
       )}
     />

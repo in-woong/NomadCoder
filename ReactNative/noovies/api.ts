@@ -51,6 +51,18 @@ export interface TVResponse extends BaseResponse {
 }
 
 export const moviesAPI = {
+  search: async ({ queryKey }: { queryKey: string[] }) => {
+    const [_, query] = queryKey;
+    return fetch(
+      `${BASE_URL}/search/movie?api_key=${API_KEY}&language=en-US&page=1&query=${query}`
+    ).then((res) => res.json());
+  },
+  detail: ({ queryKey }: { queryKey: string[] }) => {
+    const [_, id] = queryKey;
+    return fetch(
+      `${BASE_URL}/movie/${id}?api_key=${API_KEY}&append_to_response=videos,images`
+    ).then((res) => res.json());
+  },
   getTrending: () =>
     fetch(`${BASE_URL}/trending/movie/week?api_key=${API_KEY}`).then((res) =>
       res.json()
@@ -66,6 +78,18 @@ export const moviesAPI = {
 };
 
 export const tvAPI = {
+  search: async ({ queryKey }: { queryKey: string[] }) => {
+    const [_, query] = queryKey;
+    return fetch(
+      `${BASE_URL}/search/tv?api_key=${API_KEY}&language=en-US&page=1&query=${query}`
+    ).then((res) => res.json());
+  },
+  detail: ({ queryKey }: { queryKey: string[] }) => {
+    const [_, id] = queryKey;
+    return fetch(
+      `${BASE_URL}/tv/${id}?api_key=${API_KEY}&append_to_response=videos,images`
+    ).then((res) => res.json());
+  },
   getTrending: () =>
     fetch(`${BASE_URL}/trending/tv/week?api_key=${API_KEY}`).then((res) =>
       res.json()
@@ -79,3 +103,5 @@ export const tvAPI = {
       res.json()
     ),
 };
+
+export const searchAPI = {};
