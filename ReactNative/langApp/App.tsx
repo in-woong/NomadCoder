@@ -17,19 +17,29 @@ const AnimatedBox = Animated.createAnimatedComponent(Box);
 
 export default function App() {
   const [up, setUp] = useState(false);
-  const Y_POSITION = useRef(new Animated.Value(200)).current;
+  const position = useRef(new Animated.ValueXY({ x: 0, y: 300 })).current;
   const toggleUp = () => setUp((prev) => !prev);
   const moveUp = () => {
-    Animated.timing(Y_POSITION, {
+    Animated.timing(position, {
       toValue: up ? -300 : 300,
-      useNativeDriver: true,
-      duration: 5000,
+      useNativeDriver: false,
+      duration: 500,
     }).start(toggleUp);
   };
 
-  const opacity = Y_POSITION.interpolate({
-    inputRange: [-300, -100, 100, 300],
-    outputRange: [1, 0, 0, 1],
+  const borderRadius = position.y.interpolate({
+    inputRange: [-300, 300],
+    outputRange: [100, 0],
+  });
+
+  const rotation = position.y.interpolate({
+    inputRange: [-300, 300],
+    outputRange: ['-360deg', '360deg'],
+  });
+
+  const bgColor = position.y.interpolate({
+    inputRange: [-300, 300],
+    outputRange: ['rgb(255,99,71)', 'rgb(0,0,0)'],
   });
 
   return (
@@ -37,8 +47,9 @@ export default function App() {
       <Pressable onPress={moveUp}>
         <AnimatedBox
           style={{
-            opacity: opacity,
-            transform: [{ translateY: Y_POSITION }],
+            borderRadius,
+            transform: [{ translateY: position.y }, { rotateY: rotation }],
+            backgroundColor: bgColor,
           }}
         />
       </Pressable>
