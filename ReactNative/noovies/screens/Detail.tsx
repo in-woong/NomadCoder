@@ -1,10 +1,17 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect } from 'react';
-import { Dimensions, StyleSheet, Linking, useColorScheme } from 'react-native';
+import {
+  Dimensions,
+  StyleSheet,
+  Share,
+  useColorScheme,
+  TouchableOpacity,
+  Platform,
+} from 'react-native';
 import { useQuery } from 'react-query';
 import styled from 'styled-components/native';
-import { Movie, moviesAPI, TV, tvAPI } from '../api';
+import { Movie, MovieDetails, moviesAPI, TV, tvAPI, TVDetails } from '../api';
 import { BLACK_COLOR, DARK_GRAY_COLOR } from '../colors';
 import Loader from '../components/Loader';
 import Poster from '../components/Poster';
@@ -66,11 +73,43 @@ const Detail: React.FC<DetailScreenProps> = ({
   navigation: { setOptions },
   route: { params },
 }) => {
+  const isAndroid = Platform.OS === 'android';
   const isDark = useColorScheme() === 'dark';
   const isMovie = 'original_title' in params;
-  const { isLoading, data } = useQuery(
+
+  const { isLoading, data } = useQuery<MovieDetails | TVDetails>(
     [isMovie ? 'movies' : 'tv', params.id],
     isMovie ? moviesAPI.detail : tvAPI.detail
+  );
+
+  const shareMedia = async () => {
+    if (!data) return;
+    const hompage =
+      isMovie && 'imdb_id' in data
+        ? `https://www.imdb.com/title/${data.imdb_id}`
+        : data.homepage;
+
+    if (isAndroid) {
+      await Share.share({
+        message: `${params.overview}\nCheck it out :${hompage}`,
+        title: 'original_title' in params ? 'Movie' : 'TV Show',
+      });
+    } else {
+      await Share.share({
+        url: hompage,
+        title: 'original_title' in params ? 'Movie' : 'TV Show',
+      });
+    }
+  };
+
+  const ShareButton = () => (
+    <TouchableOpacity onPress={shareMedia}>
+      <Ionicons
+        name='share-outline'
+        color={isDark ? 'white' : BLACK_COLOR}
+        size={24}
+      />
+    </TouchableOpacity>
   );
 
   useEffect(() => {
@@ -79,6 +118,14 @@ const Detail: React.FC<DetailScreenProps> = ({
     });
   }, []);
 
+  useEffect(() => {
+    {
+      data &&
+        setOptions({
+          headerRight: () => <ShareButton />,
+        });
+    }
+  }, [data]);
   const openYTLink = async (videoId: string) => {
     const baseUrl = `http://m.youtube.com/watch?v=${videoId}`;
     // await Linking.openURL(baseUrl);
