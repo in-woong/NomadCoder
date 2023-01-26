@@ -7,6 +7,7 @@ import VMedia from './VMedia';
 interface HListProps {
   title: string;
   data: Movie[] | TV[];
+  handleEndReached?: () => void;
 }
 
 const ListTitle = styled.Text`
@@ -23,17 +24,20 @@ const HListSeparator = styled.View`
   width: 20px;
 `;
 
-const HList: React.FC<HListProps> = ({ title, data }) => (
+const HList: React.FC<HListProps> = ({ title, data, handleEndReached }) => (
   <ListContainer>
     <ListTitle>{title}</ListTitle>
     <FlatList
+      onEndReached={handleEndReached}
+      onEndReachedThreshold={0.8}
+      //@ts-ignore
       data={data}
       horizontal
       showsHorizontalScrollIndicator={false}
       contentContainerStyle={{ paddingHorizontal: 10 }}
-      keyExtractor={(item) => item.id + ''}
+      keyExtractor={(item: Movie | TV) => item.id + ''}
       ItemSeparatorComponent={HListSeparator}
-      renderItem={({ item }) => (
+      renderItem={({ item }: { item: Movie | TV }) => (
         <VMedia
           posterPath={item.poster_path || ''}
           originalTitle={
