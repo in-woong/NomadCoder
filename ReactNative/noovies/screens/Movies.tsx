@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 
 import Swiper from 'react-native-swiper';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Alert, Dimensions, FlatList } from 'react-native';
+import { Dimensions, FlatList } from 'react-native';
 
 import Slide from '../components/Slide';
 import HMedia from '../components/HMedia';
@@ -51,16 +51,25 @@ const Movies: React.FC<NativeStackScreenProps<any, 'Movies'>> = () => {
   const {
     isLoading: upcomingLoading,
     data: upcomingData,
-    fetchNextPage,
-    hasNextPage,
+    fetchNextPage: fetchUpcomingDataPage,
+    hasNextPage: hasUpcomingDataNextPage,
   } = useInfiniteQuery(['movies', 'upcoming'], moviesAPI.getUpcoming, {
     getNextPageParam: (currentPage) => {
       const nextPage = currentPage.page + 1;
       return nextPage > currentPage.total_pages ? null : nextPage;
     },
   });
-  const { isLoading: trendingLoading, data: trendingData } =
-    useQuery<MovieResponse>(['movies', 'trending'], moviesAPI.getTrending);
+  const {
+    isLoading: trendingLoading,
+    data: trendingData,
+    fetchNextPage: fetchTrendingDataPage,
+    hasNextPage: hasTrendingDataNextPage,
+  } = useInfiniteQuery(['movies', 'trending'], moviesAPI.getTrending, {
+    getNextPageParam: (currentPage) => {
+      const nextPage = currentPage.page + 1;
+      return nextPage > currentPage.total_pages ? null : nextPage;
+    },
+  });
 
   const onRefresh = async () => {
     setRefreshing(true);
@@ -69,9 +78,15 @@ const Movies: React.FC<NativeStackScreenProps<any, 'Movies'>> = () => {
   };
 
   const loading = trendingLoading || upcomingLoading || nowPlayingLoading;
-  const loadMore = () => {
-    if (hasNextPage) {
-      fetchNextPage();
+  const loadUpcomingData = () => {
+    if (hasUpcomingDataNextPage) {
+      fetchUpcomingDataPage();
+    }
+  };
+
+  const loadTrendingData = () => {
+    if (hasTrendingDataNextPage) {
+      fetchTrendingDataPage();
     }
   };
 
@@ -79,7 +94,7 @@ const Movies: React.FC<NativeStackScreenProps<any, 'Movies'>> = () => {
     <Loader />
   ) : upcomingData ? (
     <FlatList
-      onEndReached={loadMore}
+      onEndReached={loadUpcomingData}
       onEndReachedThreshold={0.8}
       onRefresh={onRefresh}
       refreshing={refreshing}
@@ -112,12 +127,18 @@ const Movies: React.FC<NativeStackScreenProps<any, 'Movies'>> = () => {
               ))}
           </Swiper>
           {trendingData && (
-            <HList title='Trending Movie' data={trendingData.results} />
+            <HList
+              title='Trending Movie'
+              //@ts-ignore
+              data={trendingData.pages.map((page) => page.results).flat()}
+              handleEndReached={loadTrendingData}
+            />
           )}
 
           <ListTitle>Coming Soon</ListTitle>
         </>
       }
+      //@ts-ignore
       data={upcomingData.pages.map((page) => page.results).flat()}
       keyExtractor={movieKeyExtractor}
       ItemSeparatorComponent={HSeparator}

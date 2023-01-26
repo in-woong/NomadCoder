@@ -162,10 +162,10 @@ export const moviesAPI: MovieFetchers = {
       `${BASE_URL}/movie/${id}?api_key=${API_KEY}&append_to_response=videos,images`
     ).then((res) => res.json());
   },
-  getTrending: () =>
-    fetch(`${BASE_URL}/trending/movie/week?api_key=${API_KEY}`).then((res) =>
-      res.json()
-    ),
+  getTrending: ({ pageParam = 1 }) =>
+    fetch(
+      `${BASE_URL}/trending/movie/week?api_key=${API_KEY}&page=${pageParam}`
+    ).then((res) => res.json()),
   getUpcoming: ({ pageParam }) =>
     fetch(
       `${BASE_URL}/movie/upcoming?api_key=${API_KEY}&page=${pageParam}`
