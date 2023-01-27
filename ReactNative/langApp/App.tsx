@@ -18,25 +18,27 @@ const AnimatedBox = Animated.createAnimatedComponent(Box);
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 
 export default function App() {
+  const position = useRef(
+    new Animated.ValueXY({
+      x: 0,
+      y: 0,
+    })
+  ).current;
+
   const panResponder = useRef(
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
       onPanResponderMove: (_, { dx, dy }) =>
         position.setValue({ x: dx, y: dy }),
       onPanResponderRelease: (e, gestureState) => {
-        Animated.spring(position, {
-          toValue: { x: 0, y: 0 },
-          bounciness: 10,
-          useNativeDriver: false,
-        }).start();
+        position.flattenOffset();
       },
-    })
-  ).current;
-
-  const position = useRef(
-    new Animated.ValueXY({
-      x: 0,
-      y: 0,
+      onPanResponderGrant: () => {
+        position.setOffset({
+          x: position.x._value,
+          y: position.y._value,
+        });
+      },
     })
   ).current;
 
