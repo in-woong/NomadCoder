@@ -1,8 +1,7 @@
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useRef } from 'react';
 import { Animated, TouchableOpacity, View } from 'react-native';
 import styled from 'styled-components/native';
-import { YOHB } from '../api';
 
 const Wrapper = styled(Animated.createAnimatedComponent(View))`
   background-color: rgba(255, 255, 255, 0.1);
