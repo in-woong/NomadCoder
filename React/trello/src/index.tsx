@@ -7,9 +7,7 @@ const container = document.getElementById('app');
 const root = createRoot(container!);
 
 root.render(
-  <React.StrictMode>
-    <RecoilRoot>
-      <App />
-    </RecoilRoot>
-  </React.StrictMode>
+  <RecoilRoot>
+    <App />
+  </RecoilRoot>
 );
