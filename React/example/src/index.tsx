@@ -4,6 +4,7 @@ import { RecoilRoot } from 'recoil';
 import { ThemeProvider } from 'styled-components';
 import App from './App';
 import { darkTheme } from './theme';
+import { createRoot } from 'react-dom/client';
 
 import { createGlobalStyle } from 'styled-components';
 
@@ -71,8 +72,10 @@ a {
   color:inherit;
 }
 `;
+const container = document.getElementById('root');
 
-ReactDOM.render(
+const root = createRoot(container as HTMLElement);
+root.render(
   <React.StrictMode>
     <RecoilRoot>
       <ThemeProvider theme={darkTheme}>
@@ -80,6 +83,5 @@ ReactDOM.render(
         <App />
       </ThemeProvider>
     </RecoilRoot>
-  </React.StrictMode>,
-  document.getElementById('root')
+  </React.StrictMode>
 );
