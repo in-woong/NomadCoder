@@ -7,11 +7,11 @@ import {
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { todoState } from './atoms';
-import DraggableCard from './components/DraggableCard';
+import Board from './components/Board';
 
 const Wrapper = styled.div`
   display: flex;
-  max-width: 480px;
+  max-width: 680px;
   width: 100%;
   margin: 0 auto;
   justify-content: center;
@@ -20,44 +20,33 @@ const Wrapper = styled.div`
 `;
 
 const Boards = styled.div`
-  display: grid;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
-  grid-template-columns: repeat(1, 1fr);
-`;
-
-const Board = styled.div`
-  padding: 20px 10px;
-  padding-top: 30px;
-  background-color: ${(props) => props.theme.boardColor};
-  border-radius: 5px;
-  min-height: 200px;
+  gap: 10px;
 `;
 
 function App() {
   const [todos, setTodos] = useRecoilState(todoState);
+
   const onDragEnd = ({ draggableId, destination, source }: DropResult) => {
     if (!destination) return;
+
     setTodos((oldTodos) => {
-      const copyTodos = [...oldTodos];
+      const copyTodos = [...oldTodos.to_do];
       copyTodos.splice(source.index, 1);
       copyTodos.splice(destination.index, 0, draggableId);
-      return copyTodos;
+      return { 'To Do': [...copyTodos], ...oldTodos };
     });
   };
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Wrapper>
         <Boards>
-          <Droppable droppableId='one'>
-            {(magic) => (
-              <Board ref={magic.innerRef} {...magic.droppableProps}>
-                {todos.map((toDo, index) => (
-                  <DraggableCard key={index} index={index} toDo={toDo} />
-                ))}
-                {magic.placeholder}
-              </Board>
-            )}
-          </Droppable>
+          {Object.keys(todos).map((boardId) => (
+            <Board todos={todos[boardId]} boardId={boardId} key={boardId} />
+          ))}
         </Boards>
       </Wrapper>
     </DragDropContext>
