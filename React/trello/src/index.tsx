@@ -1,13 +1,19 @@
 import React from 'react';
-import { createRoot } from 'react-dom/client';
-import App from './App';
+import ReactDOM from 'react-dom/client';
 import { RecoilRoot } from 'recoil';
+import { ThemeProvider } from 'styled-components';
+import App from './App';
+import { GlobalStyle } from './GlobalStyle';
+import { darkTheme } from './theme';
 
-const container = document.getElementById('app');
-const root = createRoot(container!);
-
+const root = ReactDOM.createRoot(
+  document.getElementById('root') as HTMLElement
+);
 root.render(
   <RecoilRoot>
-    <App />
+    <ThemeProvider theme={darkTheme}>
+      <GlobalStyle />
+      <App />
+    </ThemeProvider>
   </RecoilRoot>
 );
