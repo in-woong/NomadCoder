@@ -1,9 +1,4 @@
-import {
-  DragDropContext,
-  Droppable,
-  Draggable,
-  DropResult,
-} from 'react-beautiful-dnd';
+import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { todoState } from './atoms';
@@ -36,16 +31,17 @@ function App() {
     if (destination.droppableId === source.droppableId) {
       setTodos((allBoards) => {
         const boardCopy = [...allBoards[source.droppableId]];
-        boardCopy.splice(source.index, 1);
-        boardCopy.splice(destination.index, 0, draggableId);
+        const taskObj = boardCopy.splice(source.index, 1);
+
+        boardCopy.splice(destination.index, 0, taskObj[0]);
         return { ...allBoards, [source.droppableId]: boardCopy };
       });
     } else {
       setTodos((allBoards) => {
         const sourceCopy = [...allBoards[source.droppableId]];
-        sourceCopy.splice(source.index, 1);
+        const taskObj = sourceCopy.splice(source.index, 1);
         const destCopy = [...allBoards[destination.droppableId]];
-        destCopy.splice(destination.index, 0, draggableId);
+        destCopy.splice(destination.index, 0, taskObj[0]);
         return {
           ...allBoards,
           [source.droppableId]: sourceCopy,
