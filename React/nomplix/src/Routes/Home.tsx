@@ -1,10 +1,11 @@
 import { AnimatePresence, motion, useScroll } from 'framer-motion';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
-import { useMatch, useNavigate } from 'react-router-dom';
+import { useMatch } from 'react-router-dom';
 import styled from 'styled-components';
 import { getMovies, IGetMoviesResult } from '../api';
 import MovieModal from '../Components/MovidModal';
+import MovieBox from '../Components/MovieBox';
 import { makeImagePath } from '../utils';
 
 const Wrapper = styled.div`
@@ -55,37 +56,6 @@ const Row = styled(motion.div)`
   width: 100%;
 `;
 
-const Box = styled(motion.div)<{ bgPhoto: string }>`
-  background-color: white;
-  height: 200px;
-  background-image: url(${(props) => props.bgPhoto});
-  background-size: cover;
-  background-position: center;
-
-  cursor: pointer;
-
-  &:first-child {
-    transform-origin: center left;
-  }
-
-  &:last-child {
-    transform-origin: center right;
-  }
-`;
-
-const Info = styled(motion.div)`
-  padding: 10px;
-  background-color: ${(props) => props.theme.black.lighter};
-  opacity: 0;
-  position: absolute;
-  width: 100%;
-  bottom: 0;
-  h4 {
-    text-align: center;
-    font-size: 18px;
-  }
-`;
-
 const rowVariants = {
   hidden: {
     x: window.outerWidth + 5,
@@ -98,42 +68,16 @@ const rowVariants = {
   },
 };
 
-const boxVariants = {
-  normal: {
-    scale: 1,
-  },
-  hover: {
-    scale: 1.3,
-    y: -80,
-    transition: {
-      delay: 0.5,
-      duration: 0.3,
-      type: 'tween',
-    },
-  },
-};
-
-const infoVariants = {
-  hover: {
-    opacity: 1,
-    transition: {
-      delay: 0.5,
-      duration: 0.1,
-      type: 'tween',
-    },
-  },
-};
-
 const offset = 6;
 
 const Home = () => {
-  const navigate = useNavigate();
   const bigMovieMatch = useMatch('/movies/:movieId');
 
   const { data, isLoading } = useQuery<IGetMoviesResult>(
     ['movies', 'nowPlaying'],
     getMovies
   );
+
   const [index, setIndex] = useState(0);
   const [leaving, setLeaving] = useState(false);
   const toggleLeaving = () => setLeaving((prev) => !prev);
@@ -143,9 +87,6 @@ const Home = () => {
     const totalMovies = data.results.length;
     const maxIndex = Math.floor(totalMovies / offset);
     setIndex((prev) => (prev === maxIndex ? 0 : prev + 1));
-  };
-  const onBoxClicked = (movieId: number) => {
-    navigate(`/movies/${movieId}`);
   };
 
   const clickedMovie =
@@ -181,20 +122,7 @@ const Home = () => {
                   .slice(1)
                   .slice(offset * index, offset * (index + 1))
                   .map((movie) => (
-                    <Box
-                      layoutId={movie.id.toString()}
-                      key={movie.id}
-                      onClick={() => onBoxClicked(movie.id)}
-                      variants={boxVariants}
-                      initial='normal'
-                      whileHover='hover'
-                      transition={{ type: 'tween' }}
-                      bgPhoto={makeImagePath(movie.backdrop_path, 'w500')}
-                    >
-                      <Info variants={infoVariants}>
-                        <h4>{movie.title}</h4>
-                      </Info>
-                    </Box>
+                    <MovieBox movie={movie} />
                   ))}
               </Row>
             </AnimatePresence>

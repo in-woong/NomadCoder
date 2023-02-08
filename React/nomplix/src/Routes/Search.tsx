@@ -1,5 +1,10 @@
+import { useSearchParams } from 'react-router-dom';
+
 const Search = () => {
-  return <h1>Search</h1>;
+  const [searchParams] = useSearchParams();
+  const keyword = searchParams.get('keyword');
+
+  return <h1>{keyword}</h1>;
 };
 
 export default Search;
