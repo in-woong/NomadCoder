@@ -1,8 +1,8 @@
-import { graphql, useStaticQuery } from 'gatsby';
-import React from 'react';
+import { graphql, useStaticQuery } from "gatsby";
+import React from "react";
 
 interface ISeoProps {
-  title: string;
+  title?: string | null;
 }
 
 export default function Seo({ title }: ISeoProps) {
@@ -20,7 +20,7 @@ export default function Seo({ title }: ISeoProps) {
 
   return (
     <title>
-      {title} | {data.site?.siteMetadata?.title}{' '}
+      {title} | {data.site?.siteMetadata?.title}{" "}
     </title>
   );
 }
