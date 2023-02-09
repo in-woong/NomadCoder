@@ -1,14 +1,31 @@
-import { HeadFC } from 'gatsby';
+import { graphql, HeadFC, PageProps } from 'gatsby';
 import React, { useEffect, useState } from 'react';
 import Layout from '../components/Layout';
 import Seo from '../components/Seo';
 
-export default function Blog() {
+export default function Blog({ data }: PageProps<Queries.BlogQueryQuery>) {
   const [blogPosts, setBlogPosts] = useState();
-  useEffect(() => {
-    fetchBlogPosts();
-  }, []);
-  return <Layout title='Blog'>{blogPosts}</Layout>;
+  useEffect(() => {}, []);
+
+  return (
+    <Layout title='Blog'>
+      <ul>
+        {data.allFile.nodes.map((file, index) => (
+          <li key={index}>{file.name}</li>
+        ))}
+      </ul>
+    </Layout>
+  );
 }
+
+export const query = graphql`
+  query BlogQuery {
+    allFile {
+      nodes {
+        name
+      }
+    }
+  }
+`;
 
 export const Head: HeadFC = () => <Seo title='Blog' />;
