@@ -1,3 +1,4 @@
+require("dotenv").config();
 import type { GatsbyConfig } from "gatsby";
 
 const config: GatsbyConfig = {
@@ -21,6 +22,15 @@ const config: GatsbyConfig = {
     `gatsby-plugin-image`,
     `gatsby-plugin-sharp`,
     `gatsby-transformer-sharp`,
+    {
+      resolve: `gatsby-source-contentful`,
+      options: {
+        spaceId: `pb7milcui81v`,
+        // Learn about environment variables: https://gatsby.dev/env-vars
+        accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
+      },
+    },
+    `gatsby-plugin-image`,
   ],
 };
 

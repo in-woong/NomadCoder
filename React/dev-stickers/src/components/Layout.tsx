@@ -1,5 +1,5 @@
-import { Link } from 'gatsby';
-import React from 'react';
+import { Link } from "gatsby";
+import React from "react";
 
 interface ILayoutProps {
   children: any;
@@ -8,7 +8,7 @@ interface ILayoutProps {
 
 export default function Layout({ children, title }: ILayoutProps) {
   return (
-    <>
+    <div className='container'>
       <nav>
         <ul>
           <li>
@@ -19,6 +19,6 @@ export default function Layout({ children, title }: ILayoutProps) {
         </ul>
       </nav>
       <main>{children}</main>
-    </>
+    </div>
   );
 }
